@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Opportunity", "Opportunity\Opportunity.fsproj", "{8636FE5D-6F56-4533-B011-C76D1DC76560}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Opportunity.Db", "Opportunity.Db\Opportunity.Db.sqlproj", "{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{8636FE5D-6F56-4533-B011-C76D1DC76560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8636FE5D-6F56-4533-B011-C76D1DC76560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8636FE5D-6F56-4533-B011-C76D1DC76560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
