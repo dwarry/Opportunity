@@ -7,6 +7,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Opportunity", "Opportunity\
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Opportunity.Db", "Opportunity.Db\Opportunity.Db.sqlproj", "{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Opportunity.Domain", "Opportunity.Domain\Opportunity.Domain.fsproj", "{966480C5-1D39-480C-8755-D06359434971}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{966480C5-1D39-480C-8755-D06359434971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966480C5-1D39-480C-8755-D06359434971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966480C5-1D39-480C-8755-D06359434971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966480C5-1D39-480C-8755-D06359434971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
