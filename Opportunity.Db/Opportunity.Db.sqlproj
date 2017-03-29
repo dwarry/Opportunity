@@ -72,5 +72,9 @@
     <Build Include="dbo\Tables\InitiativeFollower.sql" />
     <Build Include="dbo\Tables\Initiative.sql" />
     <Build Include="dbo\Tables\Application.sql" />
+    <Build Include="dbo\Tables\Category.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Seed.PostDeployment.sql" />
   </ItemGroup>
 </Project>

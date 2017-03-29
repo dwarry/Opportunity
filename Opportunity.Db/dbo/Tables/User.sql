@@ -5,10 +5,13 @@
     [FamilyName]   NVARCHAR (32) NOT NULL,
     [EmailAddress] NVARCHAR (50) NOT NULL,
     [ProfileUrl]   NVARCHAR (80) NOT NULL,
+    [ImageUrl]     NVARCHAR (80) DEFAULT ('urn:x-opportunity:user-icon') NOT NULL,
     [UpdatedAt]    DATETIME2 (7) NOT NULL,
     [UpdatedBy]    NVARCHAR (32) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 
 
