@@ -108,12 +108,12 @@
   </ProjectExtensions>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Content Include="Content\Site.css" />
     <Compile Include="Controllers\DataTransferObjects.fs" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\ValuesController.fs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -143,6 +143,20 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\networking.svg" />
+    <Content Include="Content\communication.svg" />
+    <Content Include="Content\analysis.svg" />
+    <Content Include="Content\secondment.svg" />
+    <Content Include="Content\project.svg" />
+    <Content Include="Content\research.svg" />
+    <Content Include="Content\userSettings.svg" />
+    <Content Include="Content\createOpportunity.svg" />
+    <Content Include="Content\message.svg" />
+    <Content Include="Content\noun_557478_cc.svg" />
+    <Content Include="Content\signpost.svg" />
+    <Content Include="Content\filter.svg" />
+    <Content Include="Content\noun_558178_cc.svg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">

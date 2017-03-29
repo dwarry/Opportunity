@@ -7,31 +7,44 @@ open System.Web.Http
 
 open Opportunity.Domain
 open Opportunity.DataTransferObjects
+open System.Runtime.InteropServices
 
 /// Retrieves values.
 [<Authorize>]
-[<RoutePrefix("api/values")>]
+[<RoutePrefix("api")>]
 type ValuesController() =
     inherit ApiController()
-    let values = [|"value1";"value2"|]
 
     /// Gets all values.
-    [<Route("")>]
+    [<Route("users/current")>]
     member x.Get(): IHttpActionResult = 
         let acc = x.User.Identity.Name
         let domUser = DataAccess.getUser acc
         match domUser with
         | None -> x.NotFound () :> _
-        | Some u -> x.Ok({UserDetails.id = u.Id
-                          account = u.AccountName
-                          firstName = u.FirstName; 
-                          familyName=u.FamilyName; 
-                          email = u.EmailAddress; 
-                          profileUrl = u.ProfileUrl }) :> _
+        | Some u -> x.Ok({UserDetails.Id = u.Id
+                          Account = u.AccountName
+                          FirstName = u.FirstName; 
+                          FamilyName=u.FamilyName; 
+                          Email = u.EmailAddress; 
+                          ProfileUrl = u.ProfileUrl
+                          PhotoUrl = u.ImageUrl
+                          HasOpenApplications = Option.isSome u.AppId
+                          HasOpenOpportunities = Option.isSome u.OpId
+                          CanManageOpportunities = true
+                           }) :> _
 
-    /// Gets the value with index id.
-    [<Route("{id:int}")>]
-    member x.Get(id) : IHttpActionResult =
-        if id > values.Length - 1 then
-            x.BadRequest() :> _
-        else x.Ok(values.[id]) :> _
+    [<Route("initiatives/current")>]
+    member x.GetCurrentInitiatives([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
+                                   [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
+        x.NotFound() :> _
+
+    [<Route("initiatives/all")>]
+    member x.GetAllInitiatives ([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
+                                [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
+        x.NotFound() :> _
+
+    [<Route("initiatives/new")>]
+    member x.PostNewInitiative (initiative: NewInitiative): IHttpActionResult =
+        x.InternalServerError() :> _
+

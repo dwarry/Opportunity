@@ -77,4 +77,7 @@
   <ItemGroup>
     <PostDeploy Include="Seed.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="CompareToLocal.scmp" />
+  </ItemGroup>
 </Project>

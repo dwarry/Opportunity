@@ -1,0 +1,19 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 48 60.00000125" version="1.1" x="0px"
+     y="0px">
+  <g transform="translate(0,-1004.3622)">
+    <path style=""
+          d="M 24 0 A 24 24 0 0 0 0 24 A 24 24 0 0 0 24 48 A 24 24 0 0 0 48 24 A 24 24 0 0 0 24 0 z M 23 10 L 25 10.001953 C 25.276131 10.001953 25.499972 10.225853 25.5 10.501953 L 25.5 18.001953 L 35.5 18.001953 C 35.632602 18.001953 35.759766 18.054437 35.853516 18.148438 L 37.853516 20.148438 C 38.048679 20.343738 38.048679 20.660169 37.853516 20.855469 L 35.853516 22.855469 C 35.759763 22.948969 35.632602 23.001953 35.5 23.001953 L 25.5 23.001953 L 25.5 35.001953 L 28.5 35.001953 C 28.776131 35.001953 28.999972 35.225853 29 35.501953 L 29 37.501953 C 29 37.691553 29 38 28.5 38 L 19.5 38 C 19.223869 38 19.000028 37.7761 19 37.5 L 19 35.5 C 19.000028 35.2239 19.223869 35 19.5 35 L 22.5 35 L 22.5 18 L 12.5 18 C 12.367398 18 12.240234 17.947516 12.146484 17.853516 L 10.146484 15.853516 C 9.951321 15.658216 9.951321 15.341784 10.146484 15.146484 L 12.146484 13.146484 C 12.240237 13.052984 12.367398 13 12.5 13 L 22.5 13 L 22.5 10.5 C 22.500028 10.2239 22.723869 10 23 10 z M 23.5 11 L 23.5 13.417969 C 23.5086 13.470969 23.5086 13.525125 23.5 13.578125 L 23.5 17.417969 C 23.5086 17.470969 23.5086 17.525125 23.5 17.578125 L 23.5 35 L 24.5 35 L 24.5 22.582031 C 24.491 22.527731 24.491 22.471969 24.5 22.417969 L 24.5 18.582031 C 24.491 18.527731 24.491 18.471969 24.5 18.417969 L 24.5 11 L 23.5 11 z M 12.707031 14 L 11.207031 15.5 L 12.707031 17 L 22.5 17 L 22.5 14 L 12.707031 14 z M 25.5 19 L 25.5 22 L 35.292969 22 L 36.792969 20.5 L 35.292969 19 L 25.5 19 z M 20 36 L 20 37 L 28 37 L 28 36 L 20 36 z "
+          transform="translate(0,1004.3622)" fill="#000000" fill-opacity="1" fill-rule="evenodd" stroke="none" />
+  </g>
+  <text x="0" y="63.000001" fill="#000000" font-size="5px" font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">
+    Created by Chameleon Design
+  </text>
+  <text x="0" y="68.000001" fill="#000000" font-size="5px" font-weight="bold"
+        font-family="'Helvetica Neue', Helvetica, Arial-Unicode, Arial, Sans-serif">
+    from the Noun Project
+  </text>
+</svg>
