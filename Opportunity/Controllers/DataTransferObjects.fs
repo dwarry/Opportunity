@@ -1,4 +1,4 @@
-﻿module Opportunity.DataTransferObjects
+﻿namespace Opportunity.DataTransferObjects
 
 open System
 open System.ComponentModel.DataAnnotations
@@ -11,19 +11,19 @@ type Application = {
     
     IsSubmitted: bool
 
-    ApplicationDate: Nullable<DateTime>
+    ApplicationDate: option<DateTime>
     
     [<StringLength(1024)>]
     ApplicationText: string
     
-    MeetingTime: Nullable<DateTime>
+    MeetingTime: option<DateTime>
 
-    MeetingDuration: Nullable<int>
+    MeetingDuration: option<int>
 
-    IsSuccessful: Nullable<bool>
+    IsSuccessful: option<bool>
 
     [<StringLength(400)>]
-    OwnerComments: string
+    OwnerComments: string option
 
     UpdatedAt: DateTime
 
@@ -39,11 +39,10 @@ type NewApplication = {
     
     IsSubmitted: bool
 
-    ApplicationDate: Nullable<DateTime>
-    
-    [<StringLength(1024)>]
+    [<Required; StringLength(1024)>]
     ApplicationText: string
 }
+
 
 [<CLIMutable>]
 type ApplicationMeetingRequest = {
@@ -51,9 +50,9 @@ type ApplicationMeetingRequest = {
     
     UserId: int
     
-    MeetingTime: Nullable<DateTime>
+    MeetingTime: option<DateTime>
 
-    MeetingDuration: Nullable<int>
+    MeetingDuration: option<int>
 
     [<StringLength(400)>]
     OwnerComments: string
@@ -65,7 +64,7 @@ type ApplicationOutcome = {
     
     UserId: int
     
-    IsSuccessful: Nullable<bool>
+    IsSuccessful: option<bool>
 
     [<StringLength(400)>]
     OwnerComments: string
@@ -91,7 +90,7 @@ type NewInitiative = {
     LogoUrl: string
     StartDate: DateTime
     EndDate: DateTime
-    OrganizationalUnitId: Nullable<int>
+    OrganizationalUnitId: int option
 }
 
 [<CLIMutable>]
@@ -124,6 +123,33 @@ type Initiative = {
     Version: string
 }
 
+
+[<CLIMutable>]
+type OrganizationalUnit = {
+    Id: int
+    Name: string
+    Colour: string
+    Icon: option<string>
+    SubOrgUnits: OrganizationalUnit[]
+}
+ 
+[<CLIMutable>]
+type ToggleFollower = {
+    SubjectType: string
+    SubjectId: int
+}
+
+[<CLIMutable>]
+type SubjectFollower = {
+    SubjectType: string
+    SubjectId: int
+    SubjectName: string
+    FollowerId: int
+    FollowerName: string
+    CreatedAt: DateTime
+}
+
+
 [<CLIMutable>]
 type UserDetails = {
     Id: int
@@ -136,4 +162,11 @@ type UserDetails = {
     HasOpenApplications: bool
     HasOpenOpportunities: bool
     CanManageOpportunities: bool
+    Following: SubjectFollower[]
+}
+
+[<CLIMutable>]
+type RefData = {
+    Categories: Category[]
+    OrgUnits: OrganizationalUnit[]
 }

@@ -8,6 +8,8 @@ open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Optimization
 
+open Newtonsoft.Json.Converters
+
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
         bundles.Add(ScriptBundle("~/bundles/jquery").Include([|"~/Scripts/jquery-{version}.js"|]))
@@ -49,7 +51,7 @@ type Global() =
         // Configure serialization
         config.Formatters.XmlFormatter.UseXmlSerializer <- true
         config.Formatters.JsonFormatter.SerializerSettings.ContractResolver <- Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
-
+        config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new OptionConverter())
         // Additional Web API settings
 
     static member RegisterFilters(filters: GlobalFilterCollection) =

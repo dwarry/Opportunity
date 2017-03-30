@@ -57,6 +57,12 @@
     <None Include="SQL\GetUser.sql" />
     <None Include="SQL\InsertUser.sql" />
     <None Include="SQL\GetActiveInitiatives.sql" />
+    <None Include="SQL\GetUserFollowingDetails.sql" />
+    <None Include="SQL\CreateInitiative.sql" />
+    <None Include="SQL\DeleteInitiative.sql" />
+    <None Include="SQL\CreateOpportunity.sql" />
+    <None Include="SQL\GetOrgUnits.sql" />
+    <None Include="SQL\GetCategories.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data.SqlClient">
@@ -71,6 +77,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
   </ItemGroup>
