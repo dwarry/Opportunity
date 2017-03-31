@@ -11,7 +11,7 @@
 	OrganizationalUnitId
 
 )
-OUTPUT INSERTED.Id
+OUTPUT INSERTED.Id, INSERTED.UpdatedAt, INSERTED.Version
 VALUES 
 (
 	@name,

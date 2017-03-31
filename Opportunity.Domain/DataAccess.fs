@@ -61,6 +61,7 @@ type private CreateInitiative = SqlCommandProvider<"CreateInitiative.sql",
                                                    ResolutionFolder=sqlFolder,
                                                    SingleRow=true>
 
+type CreateInitiativeRecord = CreateInitiative.Record
 
 type private DeleteInitiative = SqlCommandProvider<"DeleteInitiative.sql",
                                                    "name=Opportunity",
@@ -149,7 +150,7 @@ let createInitiative (name: string)
                      (startDate: DateTime)
                      (endDate: DateTime)
                      (updatedBy: string)
-                     (orgUnitId: int) =
+                     (orgUnitId: int) : CreateInitiativeRecord option =
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new CreateInitiative(conn, transaction=tran)
@@ -163,7 +164,7 @@ let createInitiative (name: string)
                                                          orgUnitId)
 
                                  match newId with
-                                 | Some x -> (true, newId)
+                                 | Some y -> (true, newId)
                                  | _      -> (false, None))
 
 let deleteInitiative (id: int) = 
