@@ -90,7 +90,7 @@ type NewInitiative = {
     LogoUrl: string
     StartDate: DateTime
     EndDate: DateTime
-    OrganizationalUnitId: int option
+    OrganizationalUnitId: int 
 }
 
 [<CLIMutable>]
@@ -101,13 +101,13 @@ type Initiative = {
     Name: string
 
     [<StringLength(200)>]
-    Description: string
+    Description: string option
     
     [<StringLength(100)>]
-    Link: string
+    Link: string option
     
     [<StringLength(80)>]
-    LogoUrl: string
+    LogoUrl: string option
 
     StartDate: DateTime
     

@@ -38,6 +38,7 @@ type private GetUser = SqlCommandProvider<"GetUser.sql",
                                           ConfigFile="DesignTime.config",
                                           SingleRow=true,
                                           ResolutionFolder=sqlFolder>
+type GetUserRecord = GetUser.Record
 
 type private InsertUser = SqlCommandProvider<"InsertUser.sql",
                                              "name=Opportunity",
@@ -49,6 +50,9 @@ type private GetActiveInitiatives = SqlCommandProvider<"GetActiveInitiatives.sql
                                                        "name=Opportunity",
                                                        ConfigFile="DesignTime.config",
                                                        ResolutionFolder=sqlFolder>
+
+type GetActiveInitiativesRecord = GetActiveInitiatives.Record
+
 
 
 type private CreateInitiative = SqlCommandProvider<"CreateInitiative.sql",
@@ -75,16 +79,25 @@ let private doInTransaction<'TResult> (isolationLevel: IsolationLevel)
     if shouldCommit then tran.Commit() else tran.Rollback()
     result 
 
-let getCategories () = 
+let getCategories (): GetCategoriesRecord[] = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetCategories(conn, transaction = tran)
                                  (true, cmd.Execute () |> Seq.toArray ) )
-let getOrgUnits () = 
+
+let getOrgUnits (): GetOrgUnitsRecord[] = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetOrgUnits(conn, transaction = tran)
                                  (true, cmd.Execute () |> Seq.toArray ) )
+
+let getActiveInitiatives (pageSize: int) (pageIndex: int) (asAt: DateTime): GetActiveInitiativesRecord[] = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetActiveInitiatives(conn, transaction = tran)
+                                 (true, cmd.Execute (pageSize, pageIndex, asAt.Date) |> Seq.toArray))
+
+
 
 let createUser (accountName: string) 
                (firstName:string) 
@@ -92,7 +105,7 @@ let createUser (accountName: string)
                (emailAddress:string)
                (profileUrl:string)
                (imageUrl:string)
-               (updatedBy:string) =
+               (updatedBy:string): int option =
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new InsertUser(conn, transaction = tran)
@@ -162,3 +175,25 @@ let deleteInitiative (id: int) =
                                  | Some (Some x) -> (true, Some x)
                                  | _             -> (false, None))
 
+
+
+type private GetAllInitiatives = SqlCommandProvider<"GetAllInitiatives.sql", "name=Opportunity", ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+
+type private GetAllInitiativesRecord = GetAllInitiatives.Record
+
+let getAllInitiatives (pageSize: int) (pageIndex: int): GetAllInitiativesRecord[] = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetAllInitiatives(conn, transaction = tran)
+                                 (true, cmd.Execute(pageSize, pageIndex) |> Seq.toArray ) )
+
+
+type private GetInitiative = SqlCommandProvider<"GetInitiative.sql", "name=Opportunity", SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+
+type private GetInitiativeRecord = GetInitiative.Record
+
+let getInitiative (id: int): GetInitiativeRecord option = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetInitiative(conn, transaction = tran)
+                                 (true, cmd.Execute (id) ) )

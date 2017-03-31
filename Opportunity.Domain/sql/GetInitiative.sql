@@ -1,7 +1,4 @@
-﻿--DECLARE @pageSize INT = 10, @pageIndex INT = 0, @asAtDate DATE = GETDATE()
-declare  @size INT = @pageSize;
-declare  @index INT = @pageIndex;
-declare  @offset INT = @size * @index;
+﻿--DECLARE @id INT = 1;
 
 SELECT
             [Id],
@@ -16,7 +13,4 @@ SELECT
             [UpdatedBy],
             [Version]
 FROM		Initiative
-WHERE		[EndDate] >= @asAtDate
-ORDER BY	[StartDate] DESC
-OFFSET		@offset ROWS
-FETCH NEXT	@size ROWS ONLY
+WHERE		[Id] = @id

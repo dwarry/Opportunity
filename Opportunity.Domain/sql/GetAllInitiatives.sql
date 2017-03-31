@@ -16,7 +16,6 @@ SELECT
             [UpdatedBy],
             [Version]
 FROM		Initiative
-WHERE		[EndDate] >= @asAtDate
 ORDER BY	[StartDate] DESC
 OFFSET		@offset ROWS
 FETCH NEXT	@size ROWS ONLY
