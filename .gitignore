@@ -241,3 +241,11 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 Opportunity.Db/Opportunity.Db.jfm
+
+# SPA exclusions
+spa/node_modules
+spa/.idea
+spa/.DS_STORE
+spa/scripts
+spa/fonts/
+spa/styles/materialize.min.css

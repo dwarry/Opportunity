@@ -1,0 +1,5 @@
+{
+    "name": "prepare-materialize",
+    "description": "Copies the fonts and styles to a location that can be resolved at runtime.",
+    "flags": []
+}
