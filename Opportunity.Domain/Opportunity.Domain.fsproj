@@ -56,17 +56,17 @@
     <Compile Include="InitiativeDataAccess.fs" />
     <Content Include="packages.config" />
     <Content Include="DesignTime.config" />
-    <None Include="SQL\GetInitiative.sql" />
-    <None Include="SQL\GetUser.sql" />
-    <None Include="SQL\InsertUser.sql" />
-    <None Include="SQL\GetUserFollowingDetails.sql" />
-    <None Include="SQL\CreateInitiative.sql" />
-    <None Include="SQL\DeleteInitiative.sql" />
-    <None Include="SQL\CreateOpportunity.sql" />
-    <None Include="SQL\GetOrgUnits.sql" />
-    <None Include="SQL\GetCategories.sql" />
     <None Include="SQL\GetActiveInitiatives.sql" />
     <None Include="SQL\GetAllInitiatives.sql" />
+    <None Include="SQL\GetCategories.sql" />
+    <None Include="SQL\GetInitiative.sql" />
+    <None Include="SQL\GetOrgUnits.sql" />
+    <None Include="SQL\GetUser.sql" />
+    <None Include="SQL\GetUserFollowingDetails.sql" />
+    <None Include="SQL\CreateInitiative.sql" />
+    <None Include="SQL\CreateOpportunity.sql" />
+    <None Include="SQL\InsertUser.sql" />
+    <None Include="SQL\DeleteInitiative.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data.SqlClient">
