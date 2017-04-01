@@ -18,25 +18,8 @@ let internal connectionString = System.Configuration.ConfigurationManager.Connec
 type internal DB = SqlProgrammabilityProvider<"name=Opportunity", 
                                               ConfigFile="DesignTime.config">
 
-
-type private GetCategories = SqlCommandProvider<"GetCategories.sql",
-                                                "name=Opportunity",
-                                                ConfigFile="DesignTime.config",
-                                                ResolutionFolder=sqlFolder >
-
-type GetCategoriesRecord = GetCategories.Record
-
-type private GetOrgUnits = SqlCommandProvider<"GetOrgUnits.sql", 
-                                              "name=Opportunity", 
-                                              ConfigFile="DesignTime.config", 
-                                              ResolutionFolder=sqlFolder >
-
-type GetOrgUnitsRecord = GetOrgUnits.Record
-
-
-
-
-
+ 
+/// Perform the specified action within a transaction, and either commit or roll it back afterwards.
 let internal doInTransaction<'TResult> (isolationLevel: IsolationLevel) 
                                       (action: SqlTransaction -> bool * 'TResult) =
     use conn = new SqlConnection(connectionString)
@@ -45,12 +28,27 @@ let internal doInTransaction<'TResult> (isolationLevel: IsolationLevel)
     let shouldCommit, result = action tran
     if shouldCommit then tran.Commit() else tran.Rollback()
     result 
+ 
+type private GetCategories = SqlCommandProvider<"GetCategories.sql",
+                                                "name=Opportunity",
+                                                ConfigFile="DesignTime.config",
+                                                ResolutionFolder=sqlFolder >
+
+type GetCategoriesRecord = GetCategories.Record
 
 let getCategories (): GetCategoriesRecord[] = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetCategories(conn, transaction = tran)
                                  (true, cmd.Execute () |> Seq.toArray ) )
+
+
+type private GetOrgUnits = SqlCommandProvider<"GetOrgUnits.sql", 
+                                              "name=Opportunity", 
+                                              ConfigFile="DesignTime.config", 
+                                              ResolutionFolder=sqlFolder >
+
+type GetOrgUnitsRecord = GetOrgUnits.Record
 
 let getOrgUnits (): GetOrgUnitsRecord[] = 
     doInTransaction IsolationLevel.ReadCommitted
