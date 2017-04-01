@@ -45,7 +45,4 @@ export class DataService {
 
         return result;
     }
-
-
-
 }
