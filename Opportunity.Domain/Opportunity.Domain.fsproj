@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="DataAccess.fs" />
+    <Compile Include="UserDataAccess.fs" />
     <Content Include="packages.config" />
     <Content Include="DesignTime.config" />
     <None Include="SQL\GetInitiative.sql" />

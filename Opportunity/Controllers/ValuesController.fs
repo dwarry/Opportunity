@@ -19,22 +19,6 @@ type ValuesController() =
     member x.GetReferenceData (): IHttpActionResult = 
         x.Ok(Opportunity.ReferenceData.RefData) :> _
 
-    /// Gets all values.
-    [<Route("users/current")>]
-    member x.Get(): IHttpActionResult = 
-        let acc = x.User.Identity.Name
-        let u = DataAccess.getUser acc
-        x.Ok({UserDetails.Id = u.Id
-              Account = u.AccountName
-              FirstName = u.FirstName; 
-              FamilyName=u.FamilyName; 
-              Email = u.EmailAddress; 
-              ProfileUrl = u.ProfileUrl
-              PhotoUrl = u.ImageUrl
-              HasOpenApplications = Option.isSome u.AppId
-              HasOpenOpportunities = Option.isSome u.OpId
-              CanManageOpportunities = true
-              Following = [||]}) :> _
 
     [<Route("initiatives/{id:int}", Name="GetInitiative")>]
     member x.GetInitiative (id: int) : IHttpActionResult =

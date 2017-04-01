@@ -11,9 +11,9 @@ open System.DirectoryServices
 open System.DirectoryServices.AccountManagement
 
 [<Literal>]
-let private sqlFolder = __SOURCE_DIRECTORY__ + "\\SQL"
+let internal sqlFolder = __SOURCE_DIRECTORY__ + "\\SQL"
 
-let connectionString = System.Configuration.ConfigurationManager.ConnectionStrings.["Opportunity"].ConnectionString
+let internal connectionString = System.Configuration.ConfigurationManager.ConnectionStrings.["Opportunity"].ConnectionString
 
 type private DB = SqlProgrammabilityProvider<"name=Opportunity", 
                                              ConfigFile="DesignTime.config">
@@ -33,18 +33,6 @@ type private GetOrgUnits = SqlCommandProvider<"GetOrgUnits.sql",
 
 type GetOrgUnitsRecord = GetOrgUnits.Record
 
-type private GetUser = SqlCommandProvider<"GetUser.sql", 
-                                          "name=Opportunity", 
-                                          ConfigFile="DesignTime.config",
-                                          SingleRow=true,
-                                          ResolutionFolder=sqlFolder>
-type GetUserRecord = GetUser.Record
-
-type private InsertUser = SqlCommandProvider<"InsertUser.sql",
-                                             "name=Opportunity",
-                                             ConfigFile="DesignTime.config",
-                                             SingleRow=true,
-                                             ResolutionFolder=sqlFolder>
 
 type private GetActiveInitiatives = SqlCommandProvider<"GetActiveInitiatives.sql",
                                                        "name=Opportunity",
@@ -71,7 +59,7 @@ type private DeleteInitiative = SqlCommandProvider<"DeleteInitiative.sql",
 
 
 
-let private doInTransaction<'TResult> (isolationLevel: IsolationLevel) 
+let internal doInTransaction<'TResult> (isolationLevel: IsolationLevel) 
                                       (action: SqlTransaction -> bool * 'TResult) =
     use conn = new SqlConnection(connectionString)
     conn.Open()
@@ -100,46 +88,6 @@ let getActiveInitiatives (pageSize: int) (pageIndex: int) (asAt: DateTime): GetA
 
 
 
-let createUser (accountName: string) 
-               (firstName:string) 
-               (familyName:string)
-               (emailAddress:string)
-               (profileUrl:string)
-               (imageUrl:string)
-               (updatedBy:string): int option =
-    doInTransaction IsolationLevel.ReadCommitted
-                    (fun tran -> let conn = tran.Connection
-                                 use cmd = new InsertUser(conn, transaction = tran)
-                                 let newId = cmd.Execute(accountName, firstName, familyName, emailAddress, profileUrl, imageUrl, DateTime.Now, updatedBy)
-                                 match newId with
-                                 | Some id -> (true, newId)
-                                 | _       -> (false, None))
-
-    
-let rec getUser (accountName: string) = 
-    let createUserFromActiveDirectory () = 
-        // TODO: get the details from AD
-        use context = new PrincipalContext(ContextType.Domain)
-        let up = UserPrincipal.FindByIdentity(context, accountName)
-        if Object.ReferenceEquals(up, null) then
-            let firstName = up.GivenName
-            let familyName = up.Surname
-            let email = up.EmailAddress
-            let profile = sprintf "http://mysite/person.aspx?accountname=%s" (System.Net.WebUtility.UrlEncode(accountName)) 
-            let image = sprintf "http://mysite/User%%20Photos/Profile%%20Pictures/%sp_LThumb.jpg" 
-                                (accountName.Split([|'\\'|]) |> Array.tryLast |> Option.get)
-
-            createUser accountName firstName familyName email profile image accountName |> ignore
-        else
-            failwith ("Unknown user: " + accountName)
-
-        
-    use cmd = new GetUser()
-    let result = cmd.Execute(accountName)
-    match result with
-    | Some x -> x
-    | None -> createUserFromActiveDirectory () 
-              getUser accountName
               
     
     
