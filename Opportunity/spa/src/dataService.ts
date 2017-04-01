@@ -4,7 +4,7 @@ import { HttpClient, json } from 'aurelia-fetch-client';
 
 import { getLogger } from 'aurelia-logging';
 
-import { User } from './models/user';
+import { IUser } from './models/user';
 
 export class DataService {
     private _httpClient = new HttpClient();
@@ -39,8 +39,8 @@ export class DataService {
 
     getUser(): Promise<User> {
 
-        let result =  this._httpClient.fetch('users/current')
-            .then<any>(response => response.json() )
+        let result = this._httpClient.fetch('users/current')
+            .then<any>(response => response.json())
             .then<User>(data => <User>data);
 
         return result;
