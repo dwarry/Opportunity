@@ -20,7 +20,7 @@ export class ApplicationRoutes {
 
         config.map([
             { route: ['', '/'], name: _routeNames.home, moduleId: 'home', nav: true, title: "Home" },
-            { route: 'error', name: _routeNames.error, moduleId: 'error', nav: false, title: "Error" }
+            { route: 'error', name: _routeNames.error, moduleId: 'error', nav: false, title: "Error" },
             { route: 'manage-opportunities', name: _routeNames.manageOpportunitiesMain, moduleId: 'manage-opportunities/main', nav: true, title: "Manage Opportunities" }
         ]);
     }

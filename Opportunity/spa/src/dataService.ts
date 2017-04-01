@@ -37,11 +37,11 @@ export class DataService {
         });
     }
 
-    getUser(): Promise<User> {
+    getUser(): Promise<IUser> {
 
         let result = this._httpClient.fetch('users/current')
             .then<any>(response => response.json())
-            .then<User>(data => <User>data);
+            .then<IUser>(data => <IUser>data);
 
         return result;
     }
