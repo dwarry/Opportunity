@@ -67,6 +67,7 @@
     <None Include="SQL\CreateOpportunity.sql" />
     <None Include="SQL\InsertUser.sql" />
     <None Include="SQL\DeleteInitiative.sql" />
+    <None Include="SQL\GetInitiativeCount.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data.SqlClient">

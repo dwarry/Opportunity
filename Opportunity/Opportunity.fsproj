@@ -109,7 +109,9 @@
   </ProjectExtensions>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Filters\DefaultParameterValueFixupFilter.fs" />
     <Compile Include="Controllers\DataTransferObjects.fs" />
+    <Compile Include="Controllers\Validation.fs" />
     <Compile Include="Controllers\ReferenceData.fs" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\ValuesController.fs" />

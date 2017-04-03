@@ -91,6 +91,20 @@ let getInitiative (id: int): GetInitiativeRecord option =
 
 
 
+
+type private GetInitiativeCount = SqlCommandProvider<"GetInitiativeCount.sql", "name=Opportunity",AllParametersOptional=true, SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+
+
+let getInitiativeCount (asAt: DateTime option): int = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetInitiativeCount(conn, transaction = tran)
+                                 let result = cmd.Execute(asAt)
+                                 let count = if Option.isSome result && Option.isSome result.Value then result.Value.Value else 0
+
+                                 (true,  count) )
+
+
 type private DeleteInitiative = SqlCommandProvider<"DeleteInitiative.sql",
                                                    "name=Opportunity",
                                                    SingleRow=true,
@@ -98,17 +112,13 @@ type private DeleteInitiative = SqlCommandProvider<"DeleteInitiative.sql",
                                                    ResolutionFolder=sqlFolder >
 
 
-
-
-              
-    
     
 /// Deletes an initiative
-let deleteInitiative (id: int) = 
+let deleteInitiative (id: int) (version: Byte array) = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new DeleteInitiative(conn, transaction = tran)
-                                 let result = cmd.Execute(id)
+                                 let result = cmd.Execute(id, version)
                                  match result with
                                  | Some (Some x) -> (true, Some x)
                                  | _             -> (false, None))

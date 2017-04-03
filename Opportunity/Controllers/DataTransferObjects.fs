@@ -170,3 +170,9 @@ type RefData = {
     Categories: Category[]
     OrgUnits: OrganizationalUnit[]
 }
+
+[<CLIMutable>]
+type ValidationMessage = {
+    PropertyName: string
+    ValidationMessage: string
+}
