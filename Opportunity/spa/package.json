@@ -40,7 +40,7 @@
     "gulp-typescript": "^3.1.4",
     "gulp-tslint": "^5.0.0",
     "tslint": "^3.11.0",
-    "typescript": ">=1.9.0-dev || ^2.0.0",
+    "typescript": ">=2.2.2",
     "@types/node": "^6.0.45",
     "gulp-htmlmin": "^3.0.0",
     "html-minifier": "^3.2.3",

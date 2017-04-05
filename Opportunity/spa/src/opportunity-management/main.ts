@@ -1,8 +1,6 @@
-namespace OpportunityManagement {
-    export class Main {
+export class Main {
 
-        activate() {
+    activate(params: any, routeConfig, navigationInstruction) {
 
-        }
     }
 }

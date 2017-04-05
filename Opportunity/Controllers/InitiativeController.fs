@@ -19,27 +19,27 @@ type InitiativeController() =
 
 
     [<Route("initiatives/{id:int}", Name="GetInitiative")>]
-    member x.GetInitiative (id: int) : IHttpActionResult =
+    member this.GetInitiative (id: int) : IHttpActionResult =
         let maybeInit = InitiativeDataAccess.getInitiative id
         match maybeInit with
-        | None -> x.NotFound() :> _
-        | Some init -> x.Ok({Initiative.Id = init.Id
-                             Name = init.Name
-                             Description = init.Description
-                             Link  = init.Link
-                             LogoUrl = init.LogoUrl
-                             StartDate = init.StartDate
-                             EndDate = init.EndDate
-                             OrganizationalUnitId = init.OrganizationalUnitId
-                             UpdatedAt = init.UpdatedAt
-                             UpdatedBy = init.UpdatedBy 
-                             Version = Convert.ToBase64String(init.Version) }) :> _
+        | None -> this.NotFound() :> _
+        | Some init -> this.Ok({Initiative.Id = init.Id
+                                Name = init.Name
+                                Description = init.Description
+                                Link  = init.Link
+                                LogoUrl = init.LogoUrl
+                                StartDate = init.StartDate
+                                EndDate = init.EndDate
+                                OrganizationalUnitId = init.OrganizationalUnitId
+                                UpdatedAt = init.UpdatedAt
+                                UpdatedBy = init.UpdatedBy 
+                                Version = Convert.ToBase64String(init.Version) }) :> _
 
     [<Route("initiatives/current")>]
-    member x.GetCurrentInitiatives([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
-                                   [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
+    member this.GetCurrentInitiatives([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
+                                      [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
 
-        let parameters = x.Request.GetQueryNameValuePairs
+        let parameters = this.Request.GetQueryNameValuePairs
 
         let inits = InitiativeDataAccess.getActiveInitiatives (pageSize.GetValueOrDefault(20)) 
                                                               (pageIndex.GetValueOrDefault(0)) 
@@ -55,12 +55,12 @@ type InitiativeController() =
                                                UpdatedAt = init.UpdatedAt
                                                UpdatedBy = init.UpdatedBy 
                                                Version = Convert.ToBase64String(init.Version) })
-        x.Ok(inits) :> _
+        this.Ok(inits) :> _
     
     
     [<Route("initiatives/all")>]
-    member x.GetAllInitiatives ([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
-                                [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
+    member this.GetAllInitiatives ([<Optional;DefaultParameterValue(0)>]pageIndex: Nullable<int>, 
+                                   [<Optional;DefaultParameterValue(20)>]pageSize: Nullable<int>): IHttpActionResult =
         let inits = InitiativeDataAccess.getAllInitiatives (pageSize.GetValueOrDefault(20)) 
                                                            (pageIndex.GetValueOrDefault(0)) 
                                                  
@@ -75,17 +75,29 @@ type InitiativeController() =
                                                UpdatedAt = init.UpdatedAt
                                                UpdatedBy = init.UpdatedBy 
                                                Version = Convert.ToBase64String(init.Version) })
-        x.Ok(inits) :> _
+        this.Ok(inits) :> _
+
+    [<HttpGet; Route("initiatives/{state}/count")>]
+    member this.GetInitiativeCount(state: string): IHttpActionResult =
+        let count = match state with
+                    | "current" -> Some (InitiativeDataAccess.getInitiativeCount (Some DateTime.Today))
+                    | "all"     -> Some (InitiativeDataAccess.getInitiativeCount None)
+                    | _         -> None
+
+        match count with
+        | Some c -> this.Ok(c) :> _
+        | None   -> this.BadRequest("Unknown state:" + state) :> _
+        
 
     [<HttpPost>]
     [<Route("initiatives/")>]
-    member x.PostNewInitiative (initiative: NewInitiative): IHttpActionResult =
+    member this.PostNewInitiative (initiative: NewInitiative): IHttpActionResult =
         if initiative.EndDate <= initiative.StartDate then
-            x.ModelState.AddModelError("EndDate", "Must be greater than Start Date")
+            this.ModelState.AddModelError("EndDate", "Must be greater than Start Date")
 
-        if x.ModelState.IsValid then
+        if this.ModelState.IsValid then
         
-            let userName = x.User.Identity.Name
+            let userName = this.User.Identity.Name
 
             let result = InitiativeDataAccess.createInitiative initiative.Name 
                                                                initiative.Description
@@ -97,7 +109,7 @@ type InitiativeController() =
                                                                initiative.OrganizationalUnitId
 
             match result with
-            | Some y -> x.CreatedAtRoute("GetInitiative", 
+            | Some y -> this.CreatedAtRoute("GetInitiative", 
                                          dict([ ("id", y.Id ) ]), 
                                          {Initiative.Id = y.Id
                                           Name = initiative.Name
@@ -111,6 +123,6 @@ type InitiativeController() =
                                           UpdatedBy = userName
                                           Version = Convert.ToBase64String(y.Version) }) :> _
                                         
-            | _ -> x.InternalServerError() :> _
+            | _ -> this.InternalServerError() :> _
         else
-            x.BadRequest(x.ModelState) :> _
+            this.BadRequest(this.ModelState) :> _
