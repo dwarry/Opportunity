@@ -4,6 +4,7 @@ open System.Collections.Generic
 open System.Linq
 open System.Net.Http
 open System.Web.Http
+open System.Web.Http.Cors
 
 open Opportunity.Domain
 open Opportunity.DataTransferObjects
@@ -14,6 +15,7 @@ open System.Runtime.InteropServices
 [<Authorize>]
 [<RoutePrefix("api")>]
 [<DefaultParameterValueFixupFilter>]
+[<EnableCors("http://localhost:9000","*", "*",SupportsCredentials=true)>]
 type InitiativeController() =
     inherit ApiController()
 
