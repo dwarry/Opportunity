@@ -1,6 +1,7 @@
-import { Aurelia } from 'aurelia-framework'
+import { Aurelia } from 'aurelia-framework';
 import environment from './environment';
 import { addCustomValidationRules } from './custom-validation-rules';
+
 
 //Configure Bluebird Promises.
 (<any>Promise).config({
@@ -8,7 +9,6 @@ import { addCustomValidationRules } from './custom-validation-rules';
     wForgottenReturn: false
   }
 });
-
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
