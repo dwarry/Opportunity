@@ -1,4 +1,4 @@
-import 'fetch';
+import 'whatwg-fetch';
 
 import { HttpClient, json } from 'aurelia-fetch-client';
 
@@ -36,11 +36,22 @@ export class OpportunityManagementDataService extends DataServiceBase {
         return result;
     }
 
-    createInitiative(initiative: INewInitiative): Promise<IInitiativeDetail> {
-        let result = this.post("initiatives", initiative)
-            .then<IInitiativeDetail>(response => <IInitiativeDetail>response.json())
+    getInitiative(id: number): Promise<IInitiativeDetail> {
+        let result = this._httpClient.fetch(`initiatives/${id}`)
+            .then<any>(response => response.json())
+            .then<IInitiativeDetail>(data => <IInitiativeDetail>data);
 
         return result;
+    }
+
+    saveInitiative(initiative: IInitiativeDetail): Promise<IInitiativeDetail> {
+        let result = (initiative.id)
+            ? this.put(`initiatives/${initiative.id}`, initiative)
+            : this.post("initiatives", initiative);
+
+        return result
+            .then<any>(response => response.json())
+            .then<IInitiativeDetail>(data => <IInitiativeDetail>data);
     }
 
     deleteInitiative(idVersion: IIdVersion): Promise<boolean> {

@@ -1,10 +1,10 @@
-import 'fetch';
-
+import 'whatwg-fetch';
 import { HttpClient, json, RequestInit } from 'aurelia-fetch-client';
 
 import { getLogger } from 'aurelia-logging';
 
 import { IUser } from './models/user';
+import { IReferenceData } from './models/reference-data';
 
 const PostDefault: RequestInit = {
     'method': 'POST',
@@ -91,6 +91,14 @@ export class DataService extends DataServiceBase {
             .then<any>(response => response.json())
             .then<IUser>(data => <IUser>data);
 
+        return result;
+    }
+
+    getReferenceData(): Promise<IReferenceData> {
+
+        let result = this._httpClient.fetch('referenceData')
+            .then<any>(response => response.json())
+            .then<IReferenceData>(data => <IReferenceData>data);
         return result;
     }
 }

@@ -1,0 +1,32 @@
+<template>
+    <require from='../resources/attributes/blur-on-enter'></require>
+    <h1>${operation}</h1> Initiative
+
+    <div class="container">
+        <div class="row">
+            <form action="" class="s12">
+                <md-input blur-on-enter="true" md-label="Name" md-value.bind="initiative.name & validate:rules">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Description" md-value.bind="initiative.description & validate:rules">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Link to Initiative page" md-value.bind="initiative.link & validate:rules">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Link to Initiative logo" md-value.bind="initiative.logoUrl & validate:rules">
+                </md-input>
+
+                <div ref="startDateWrapper">
+                    <input md-datepicker="container.bind: startDateWrapper; value.two-way: startDate;" type="date" placeholder="Start Date" />
+                </div>
+
+                <div ref="endDateWrapper">
+                    <input md-datepicker="container.bind: endDateWrapper; value.two-way: endDate;" type="date" placeholder="End Date" />
+                </div>
+
+                <button md-button click.delegate="save()">Save</button>
+            </form>
+        </div>
+    </div>
+</template>

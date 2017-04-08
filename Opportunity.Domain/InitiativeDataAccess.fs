@@ -100,7 +100,9 @@ let getInitiativeCount (asAt: DateTime option): int =
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetInitiativeCount(conn, transaction = tran)
                                  let result = cmd.Execute(asAt)
-                                 let count = if Option.isSome result && Option.isSome result.Value then result.Value.Value else 0
+                                 let count = if Option.isSome result && Option.isSome result.Value 
+                                             then result.Value.Value 
+                                             else 0
 
                                  (true,  count) )
 

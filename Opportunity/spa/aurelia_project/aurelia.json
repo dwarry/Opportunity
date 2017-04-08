@@ -139,7 +139,14 @@
             "main": "aurelia-fetch-client",
             "path": "../node_modules/aurelia-fetch-client/dist/amd",
             "resources": []
-          }
+          },
+          {
+            "name": "aurelia-validation",
+            "main": "aurelia-validation",
+            "path": "../node_modules/aurelia-validation/dist/amd",
+            "resources": []
+          },
+          "moment"
         ]
       },
       {
@@ -149,7 +156,7 @@
           {
             "name": "materialize-css",
             "path": "../node_modules/materialize-css/dist",
-            "main": "js/materialize.amd",
+            "main": "js/materialize",
             "deps": [
               "jquery"
             ],

@@ -1,5 +1,6 @@
 import { Aurelia } from 'aurelia-framework'
 import environment from './environment';
+import { addCustomValidationRules } from './custom-validation-rules';
 
 //Configure Bluebird Promises.
 (<any>Promise).config({
@@ -7,6 +8,7 @@ import environment from './environment';
     wForgottenReturn: false
   }
 });
+
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
@@ -20,9 +22,9 @@ export function configure(aurelia: Aurelia) {
   if (environment.testing) {
     aurelia.use.plugin('aurelia-testing');
   }
-  aurelia.use.plugin('aurelia-materialize-bridge', b => b.useAll());
-
-  aurelia.use.globalResources("./resources/elements/icons/icon.html");
+  aurelia.use.plugin('aurelia-materialize-bridge', b => b.useAll())
+    .plugin('aurelia-validation')
+    .globalResources("./resources/elements/icons/icon.html");
 
   aurelia.start().then(() => aurelia.setRoot());
 }

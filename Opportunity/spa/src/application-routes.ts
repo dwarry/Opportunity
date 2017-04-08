@@ -4,7 +4,10 @@ import { AppRouter, RouterConfiguration } from 'aurelia-router';
 const _routeNames = {
     error: 'error',
     home: 'home',
-    manageOpportunitiesMain: 'manage-opportunities-main'
+    initiativeDetail: 'initiative-detail',
+    initiativesList: 'initiatives-list',
+    manageOpportunitiesMain: 'manage-opportunities-main',
+
 };
 
 Object.freeze(_routeNames);
@@ -21,7 +24,10 @@ export class ApplicationRoutes {
         config.map([
             { route: ['', '/'], name: _routeNames.home, moduleId: 'home', nav: true, title: "Home" },
             { route: 'error', name: _routeNames.error, moduleId: 'error', nav: false, title: "Error" },
-            { route: 'manage-opportunities', name: _routeNames.manageOpportunitiesMain, moduleId: 'manage-opportunities/main', nav: true, title: "Manage Opportunities" }
+            { route: 'manage-opportunities', name: _routeNames.manageOpportunitiesMain, moduleId: 'manage-opportunities/main', nav: true, title: "Manage Opportunities" },
+            { route: 'initiatives', name: routeNames.initiativesList, moduleId: "opportunity-management/initiativesList", nav: true, title: 'Initiatives' },
+            { route: 'initiatives/:id', name: routeNames.initiativeDetail, moduleIds: "opportunity-management/initiativeDetail", nav: false, title: 'Initiative Details' }
         ]);
     }
+
 }
