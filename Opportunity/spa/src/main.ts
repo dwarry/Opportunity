@@ -26,5 +26,9 @@ export function configure(aurelia: Aurelia) {
     .plugin('aurelia-validation')
     .globalResources("./resources/elements/icons/icon.html");
 
-  aurelia.start().then(() => aurelia.setRoot());
+  aurelia.start().then(() => {
+    addCustomValidationRules();
+    aurelia.setRoot();
+  }
+  );
 }
