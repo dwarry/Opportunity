@@ -14,8 +14,6 @@ Object.freeze(_routeNames);
 
 export const routeNames = _routeNames;
 
-
-
 @autoinject
 export class ApplicationRoutes {
     public configureRouter(config: RouterConfiguration) {
@@ -25,8 +23,8 @@ export class ApplicationRoutes {
             { route: ['', '/'], name: _routeNames.home, moduleId: 'home', nav: true, title: "Home" },
             { route: 'error', name: _routeNames.error, moduleId: 'error', nav: false, title: "Error" },
             { route: 'manage-opportunities', name: _routeNames.manageOpportunities, moduleId: 'opportunity-management/main', nav: true, title: "Manage Opportunities" },
-            { route: 'initiatives', name: routeNames.initiativesList, moduleId: "opportunity-management/initiativesList", nav: true, title: 'Initiatives' },
-            { route: 'initiatives/:id', name: routeNames.initiativeDetail, moduleId: "opportunity-management/initiativeDetail", nav: false, title: 'Initiative Details' }
+            { route: 'initiatives', name: routeNames.initiativesList, moduleId: "opportunity-management/initiatives-list", nav: true, title: 'Initiatives' },
+            { route: 'initiatives/:id', name: routeNames.initiativeDetail, moduleId: "opportunity-management/initiative-detail", nav: false, title: 'Initiative Details' }
         ]);
     }
 
