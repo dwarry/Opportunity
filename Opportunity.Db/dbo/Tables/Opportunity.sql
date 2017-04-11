@@ -9,11 +9,12 @@
     [Outcomes]             NVARCHAR (200)  NOT NULL,
     [StartDate]            DATE            NOT NULL,
     [EndDate]              DATE            NOT NULL,
-    [Vacancies]            NVARCHAR(50)    NOT NULL DEFAULT '1',
+    [Vacancies]            NVARCHAR (50)   DEFAULT ('1') NOT NULL,
     [FurtherDetailsUrl]    NVARCHAR (100)  NULL,
     [CategoryId]           INT             NOT NULL,
     [UpdatedAt]            DATETIME2 (7)   NOT NULL,
     [UpdatedBy]            NVARCHAR (32)   NOT NULL,
+    [Version]              ROWVERSION      NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [CK_Opportunity_EndDate_After_StartDate] CHECK ([EndDate]>[StartDate]),
     CONSTRAINT [FK_Opportunity_Category] FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Category] ([Id]),
@@ -21,6 +22,8 @@
     CONSTRAINT [FK_Opportunity_OrgUnit] FOREIGN KEY ([OrganizationalUnitId]) REFERENCES [dbo].[OrganizationalUnit] ([Id]),
     CONSTRAINT [FK_Opportunity_Owner] FOREIGN KEY ([OwnerId]) REFERENCES [dbo].[User] ([Id])
 );
+
+
 
 
 
