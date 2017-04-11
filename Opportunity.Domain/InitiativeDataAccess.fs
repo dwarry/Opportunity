@@ -40,11 +40,7 @@ let createInitiative (name: string)
                                                          endDate, 
                                                          updatedBy, 
                                                          orgUnitId)
-
-                                 match newId with
-                                 | Some y -> (true, newId)
-                                 | _      -> (false, None))
-
+                                 (Option.isSome newId, newId))
 
 
 type private GetActiveInitiatives = SqlCommandProvider<"GetActiveInitiatives.sql",
@@ -60,22 +56,22 @@ type GetActiveInitiativesRecord = GetActiveInitiatives.Record
 /// <param name="pageSize">The maximum number of items to be returned</param>
 /// <param name="pageIndex">Zero-based index of the page to be returned.</param>
 /// <param name="asAt">Target date</param>
-let getActiveInitiatives (pageSize: int) (pageIndex: int) (asAt: DateTime): GetActiveInitiativesRecord[] = 
+let getActiveInitiatives (pageSize: int) (pageIndex: int) (asAt: DateTime): GetActiveInitiativesRecord[] option = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetActiveInitiatives(conn, transaction = tran)
-                                 (true, cmd.Execute (pageSize, pageIndex, asAt.Date) |> Seq.toArray))
+                                 (true, cmd.Execute (pageSize, pageIndex, asAt.Date) |> Seq.toArray |> Some))
 
 type private GetAllInitiatives = SqlCommandProvider<"GetAllInitiatives.sql", "name=Opportunity", ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
 
 type GetAllInitiativesRecord = GetAllInitiatives.Record
 
 /// Retrieves a page of all initiatives, whether currently active or not.
-let getAllInitiatives (pageSize: int) (pageIndex: int): GetAllInitiativesRecord[] = 
+let getAllInitiatives (pageSize: int) (pageIndex: int): GetAllInitiativesRecord[] option = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetAllInitiatives(conn, transaction = tran)
-                                 (true, cmd.Execute(pageSize, pageIndex) |> Seq.toArray ) )
+                                 (true, cmd.Execute(pageSize, pageIndex) |> Seq.toArray |> Some) )
 
 
 type private GetInitiative = SqlCommandProvider<"GetInitiative.sql", "name=Opportunity", SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
@@ -87,22 +83,22 @@ let getInitiative (id: int): GetInitiativeRecord option =
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetInitiative(conn, transaction = tran)
-                                 (true, cmd.Execute (id) ) )
+                                 (true, cmd.Execute(id)))
 
 
 
 
-type private GetInitiativeCount = SqlCommandProvider<"GetInitiativeCount.sql", "name=Opportunity",AllParametersOptional=true, SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+type private GetInitiativeCount = SqlCommandProvider<"GetInitiativeCount.sql", "name=Opportunity", AllParametersOptional=true, SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
 
 
-let getInitiativeCount (asAt: DateTime option): int = 
+let getInitiativeCount (asAt: DateTime option): int option = 
     doInTransaction IsolationLevel.ReadCommitted
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new GetInitiativeCount(conn, transaction = tran)
                                  let result = cmd.Execute(asAt)
                                  let count = if Option.isSome result && Option.isSome result.Value 
-                                             then result.Value.Value 
-                                             else 0
+                                             then result.Value
+                                             else Some 0
 
                                  (true,  count) )
 
@@ -125,3 +121,12 @@ let deleteInitiative (id: int) (version: Byte array) =
                                  | Some (Some x) -> (true, Some x)
                                  | _             -> (false, None))
 
+
+type private GetInitiativeIdByName = SqlCommandProvider<"GetInitiativeIdByName.sql", "name=Opportunity", SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+
+let getInitiativeIdByName (name:string): int option = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetInitiativeIdByName(conn, transaction = tran)
+                                 let result = cmd.Execute (name)
+                                 (true, result))

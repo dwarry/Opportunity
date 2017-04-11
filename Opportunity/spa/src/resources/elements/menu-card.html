@@ -1,15 +1,15 @@
 <template bindable="title,icon,description,link">
     <require from="./icons/icon.html"></require>
 
-    <div class="card small red lighten-2">
+    <a href.bind="link">
+        <div class="card small red lighten-2 z-depth-3">
 
-        <div class="card-content">
-            <span class="card-title center-align">
+            <div class="card-content">
+                <span class="card-title center-align">
                 <icon name="${icon}" size="100px" colour="#b71c1c"></icon><br>
-                <b>${title}</b></span> ${description}
+                <b class="amber-text">${title}</b></span>
+                <span class="amber-text text-lighten-2">${description}</span>
+            </div>
         </div>
-        <div class="card-action">
-            <a href="${link}" class="amber-text text-lighten-2"><b>View</b></a>
-        </div>
-    </div>
+    </a>
 </template>

@@ -2,6 +2,7 @@ import { autoinject, computedFrom } from 'aurelia-framework';
 
 import { OpportunityManagementDataService } from './data-service';
 
+import { CommonData } from '../models/reference-data';
 import { IInitiativeListItem } from './models';
 
 import { MdPagination } from 'aurelia-materialize-bridge';
@@ -17,7 +18,7 @@ export class InitiativesList {
     initiativeCount: number = 0;
     pageIndex: number = 0;
 
-    constructor(private _router: AppRouter, private _dataService: OpportunityManagementDataService) {
+    constructor(private _router: AppRouter, private _dataService: OpportunityManagementDataService, private _commonData: CommonData) {
 
     }
 
@@ -54,5 +55,13 @@ export class InitiativesList {
 
     editInitiative(id: number) {
         this._router.navigateToRoute(routeNames.initiativeDetail, { 'id': id })
+    }
+
+    getOrgUnitName(orgUnitId: number) {
+        if (orgUnitId) {
+            const result = this._commonData.orgUnits.find((val, index, arr) => val.id === orgUnitId);
+            return result ? result.name : "";
+        }
+        return "";
     }
 }

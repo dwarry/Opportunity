@@ -8,7 +8,9 @@ import { OpportunityManagementDataService } from './data-service';
 import { CommonData, IOrgUnit } from '../models/reference-data';
 import { IInitiativeDetail } from './models';
 
-import { IsValidUrl } from '../custom-validation-rules';
+import { RuleNames } from '../custom-validation-rules';
+
+import { DmyParser, DmmmmyyyyParser } from '../date-parsers';
 
 import * as moment from 'moment';
 
@@ -27,7 +29,20 @@ export class InitiativeDetail {
         version: null
     };
 
+    operation: string = "";
+
     initiative: IInitiativeDetail = InitiativeDetail.newInitiative;
+
+    parsers = [new DmyParser(), new DmmmmyyyyParser()];
+
+    datePickerOptions = {
+        closeOnSelect: true,
+        closeOnClear: true,
+        selectYears: 50,
+        editable: true,
+        showIcon: true
+    };
+
 
     constructor(
         private _router: AppRouter,
@@ -43,18 +58,21 @@ export class InitiativeDetail {
     ValidationRules
         .ensure('name').displayName('Name').required().minLength(5).maxLength(50)
         .ensure("description").displayName('Description').minLength(5).maxLength(200)
-        .ensure('link').displayName('Link').satisfiesRule(IsValidUrl).maxLength(100)
-        .ensure('logoUrl').displayName('Logo').satisfiesRule(IsValidUrl).maxLength(80)
+        .ensure('link').displayName('Link').satisfiesRule(RuleNames.IsValidUrl).maxLength(100)
+        .ensure('logoUrl').displayName('Logo').satisfiesRule(RuleNames.IsValidUrl).maxLength(80)
         .ensure('startDate').displayName('Start Date').required()
-        .ensure('endDate').displayName('End Date').required()
+        .ensure('endDate').displayName('End Date').required().satisfiesRule(RuleNames.IsAfter, "StartDate")
         .rules;
 
     activate(params, routeConfig, navigationInstruction) {
         let id = Number.parseInt(params.id, 10);
 
         if (!isNaN(id)) {
+            this.operation = "Edit";
             return this._dataService.getInitiative(id).then(init => this.initiative = init);
         }
+        this.operation = "Create";
+        this.initiative = InitiativeDetail.newInitiative;
     }
 
     save() {

@@ -24,7 +24,10 @@ export function configure(aurelia: Aurelia) {
   }
   aurelia.use.plugin('aurelia-materialize-bridge', b => b.useAll())
     .plugin('aurelia-validation')
-    .globalResources("./resources/elements/icons/icon.html");
+    .globalResources([
+      "./resources/elements/date-field",
+      "./resources/elements/icons/icon.html",
+      "./resources/value-converters/date-formatter"]);
 
   aurelia.start().then(() => {
     addCustomValidationRules();

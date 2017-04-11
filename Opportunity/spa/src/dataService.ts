@@ -57,6 +57,7 @@ export class DataServiceBase {
         _log.debug(`${method} to ${url}`);
 
         let req = {
+            'credentials': environment.credentials || 'same-origin',
             'headers': {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

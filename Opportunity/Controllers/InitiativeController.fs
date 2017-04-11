@@ -15,7 +15,7 @@ open System.Runtime.InteropServices
 [<Authorize>]
 [<RoutePrefix("api")>]
 [<DefaultParameterValueFixupFilter>]
-[<EnableCors("http://localhost:9000","*", "*",SupportsCredentials=true)>]
+[<EnableCors("http://localhost:9000","*", "*", SupportsCredentials=true)>]
 type InitiativeController() =
     inherit ApiController()
 
@@ -46,18 +46,23 @@ type InitiativeController() =
         let inits = InitiativeDataAccess.getActiveInitiatives (pageSize.GetValueOrDefault(20)) 
                                                               (pageIndex.GetValueOrDefault(0)) 
                                                               DateTime.Today
-                    |> Array.map (fun init -> {Initiative.Id = init.Id
-                                               Name = init.Name
-                                               Description = init.Description
-                                               Link  = init.Link
-                                               LogoUrl = init.LogoUrl
-                                               StartDate = init.StartDate
-                                               EndDate = init.EndDate
-                                               OrganizationalUnitId = init.OrganizationalUnitId
-                                               UpdatedAt = init.UpdatedAt
-                                               UpdatedBy = init.UpdatedBy 
-                                               Version = Convert.ToBase64String(init.Version) })
-        this.Ok(inits) :> _
+        let result = 
+            match inits with
+            | None -> Array.empty<Initiative> 
+            | Some initsArray -> initsArray |> Array.map (fun init -> { Initiative.Id = init.Id
+                                                                        Name = init.Name
+                                                                        Description = init.Description
+                                                                        Link = init.Link    
+                                                                        LogoUrl = init.LogoUrl
+                                                                        StartDate = init.StartDate
+                                                                        EndDate = init.EndDate
+                                                                        OrganizationalUnitId = init.OrganizationalUnitId
+                                                                        UpdatedAt = init.UpdatedAt
+                                                                        UpdatedBy = init.UpdatedBy
+                                                                        Version = Convert.ToBase64String(init.Version)
+                                                                      })
+                                           
+        this.Ok(result) :> _
     
     
     [<Route("initiatives/all")>]
@@ -66,18 +71,22 @@ type InitiativeController() =
         let inits = InitiativeDataAccess.getAllInitiatives (pageSize.GetValueOrDefault(20)) 
                                                            (pageIndex.GetValueOrDefault(0)) 
                                                  
-                    |> Array.map (fun init -> {Initiative.Id = init.Id
-                                               Name = init.Name
-                                               Description = init.Description
-                                               Link  = init.Link
-                                               LogoUrl = init.LogoUrl
-                                               StartDate = init.StartDate
-                                               EndDate = init.EndDate
-                                               OrganizationalUnitId = init.OrganizationalUnitId
-                                               UpdatedAt = init.UpdatedAt
-                                               UpdatedBy = init.UpdatedBy 
-                                               Version = Convert.ToBase64String(init.Version) })
-        this.Ok(inits) :> _
+        let results = 
+            match inits with
+            | None -> Array.empty<Initiative>
+            | Some initsArray -> initsArray
+                                 |> Array.map (fun init -> {Initiative.Id = init.Id
+                                                            Name = init.Name
+                                                            Description = init.Description
+                                                            Link  = init.Link
+                                                            LogoUrl = init.LogoUrl
+                                                            StartDate = init.StartDate
+                                                            EndDate = init.EndDate
+                                                            OrganizationalUnitId = init.OrganizationalUnitId
+                                                            UpdatedAt = init.UpdatedAt
+                                                            UpdatedBy = init.UpdatedBy 
+                                                            Version = Convert.ToBase64String(init.Version) })
+        this.Ok(results) :> _
 
     [<HttpGet; Route("initiatives/{state}/count")>]
     member this.GetInitiativeCount(state: string): IHttpActionResult =
@@ -90,9 +99,15 @@ type InitiativeController() =
         | Some c -> this.Ok(c) :> _
         | None   -> this.BadRequest("Unknown state:" + state) :> _
         
+    [<HttpGet; Route("initiatives/check/{name}")>]
+    member this.GetInitiativeIdByName(name:string): IHttpActionResult = 
+        let maybeId = InitiativeDataAccess.getInitiativeIdByName name
+        match maybeId with
+        | Some id -> this.Ok(id) :> _
+        | None    -> this.NotFound() :> _
 
     [<HttpPost>]
-    [<Route("initiatives/")>]
+    [<Route("initiatives")>]
     member this.PostNewInitiative (initiative: NewInitiative): IHttpActionResult =
         if initiative.EndDate <= initiative.StartDate then
             this.ModelState.AddModelError("EndDate", "Must be greater than Start Date")
@@ -112,18 +127,18 @@ type InitiativeController() =
 
             match result with
             | Some y -> this.CreatedAtRoute("GetInitiative", 
-                                         dict([ ("id", y.Id ) ]), 
-                                         {Initiative.Id = y.Id
-                                          Name = initiative.Name
-                                          Description = Some initiative.Description
-                                          Link  = Some initiative.Link
-                                          LogoUrl = Some initiative.LogoUrl
-                                          StartDate = initiative.StartDate
-                                          EndDate = initiative.EndDate
-                                          OrganizationalUnitId = initiative.OrganizationalUnitId
-                                          UpdatedAt = y.UpdatedAt
-                                          UpdatedBy = userName
-                                          Version = Convert.ToBase64String(y.Version) }) :> _
+                                            { id = y.Id }, 
+                                            {Initiative.Id = y.Id
+                                             Name = initiative.Name
+                                             Description = Some initiative.Description
+                                             Link  = Some initiative.Link
+                                             LogoUrl = Some initiative.LogoUrl
+                                             StartDate = initiative.StartDate
+                                             EndDate = initiative.EndDate
+                                             OrganizationalUnitId = initiative.OrganizationalUnitId
+                                             UpdatedAt = y.UpdatedAt
+                                             UpdatedBy = userName
+                                             Version = Convert.ToBase64String(y.Version) }) :> _
                                         
             | _ -> this.InternalServerError() :> _
         else

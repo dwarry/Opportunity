@@ -4,6 +4,11 @@ open System
 open System.ComponentModel.DataAnnotations
 
 [<CLIMutable>]
+type Id = {
+    id: int
+}
+
+[<CLIMutable>]
 type Application = {
     OpportunityId: int
     

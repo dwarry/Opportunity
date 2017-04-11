@@ -1,32 +1,29 @@
 <template>
-    <h1>Initiatives</h1>
 
-    <div>
-        <a md-button="large: true;" href=""><i class="left material-icons">library_add</i> Add New Initiative</a>
+    <div class="container">
+        <h1>Initiatives</h1>
+        <div>
+            <a md-button="large: true;" href=""><i class="left material-icons">library_add</i> Add New Initiative</a>
+        </div>
+
+        <div>
+            <ul md-collapsible>
+                <li repeat.for="initiative of initiatives">
+                    <div class="collapsible-header">${initiative.name}</div>
+                    <div class="collapsible-body">
+                        ${initiative.startDate|dateFormatter} - ${initiative.endDate|dateFormatter}
+                        <span if.bind="initiative.orgUnitId">
+                        ${getOrgUnitName(initiative.orgUnitId)}
+                        </span><br>
+                        <i if.bind="initiative.description">${initiative.description}</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="s12" if.bind="pageCount > 1">
+            <md-pagination md-pages.bind="pageCount" md-active-page.bind="pageIndex" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+        </div>
     </div>
-    <table class="bordered striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Date Range</th>
-                <th>Organizational Unit</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr repeat.for="initiative of initiatives">
-                <td>${initiative.name}</td>
-                <td>${initiative.startDate} - ${initiative.endDate}</td>
-                <td>${initiative.organizationalUnitName}</td>
-                <td>
-                    <a click.delegate='editInitiative(${initiative.id})'>
-                        <i class="material-icons">mode_edit</i>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="s12" if.bind="{pageCount > 1}">
-        <md-pagination md-pages.bind="pageCount" md-active-page.bind="pageIndex" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
-    </div>
+
 </template>
