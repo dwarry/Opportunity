@@ -1,5 +1,10 @@
-﻿DECLARE @ownerId INT = 2
-DECLARE @userId INT = @ownerId
+﻿--DECLARE @ownerName NVARCHAR(32) = 'SILICON\davew'
+declare @userId INT;
+
+SELECT @userId = Id
+FROM   dbo.[User]
+WHERE  [AccountName] = @ownerName;
+
 INSERT INTO opportunity 
 (
     OwnerId, 

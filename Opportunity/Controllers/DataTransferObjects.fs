@@ -87,16 +87,6 @@ type Category = {
     Icon: string
 }
 
-[<CLIMutable>]
-type NewInitiative = {
-    Name: string
-    Description: string
-    Link: string
-    LogoUrl: string
-    StartDate: DateTime
-    EndDate: DateTime
-    OrganizationalUnitId: int 
-}
 
 [<CLIMutable>]
 type Initiative = {
@@ -128,6 +118,148 @@ type Initiative = {
     Version: string
 }
 
+[<CLIMutable>]
+type InitiativeSummary = {
+    Id: int
+    Name: string
+    Link: string option
+    LogoUrl: string option
+}
+
+[<CLIMutable>]
+type MyOpportunity = {
+    Id: int
+
+
+    [<Required; StringLength(50)>]
+    Title: string
+    
+
+    [<Required; StringLength(1024)>]
+    Description: string
+
+
+    StartDate: DateTime
+    
+    EndDate: DateTime
+
+    CategoryId: int
+}
+
+
+
+[<CLIMutable>]
+type NewInitiative = {
+    Name: string
+    Description: string
+    Link: string
+    LogoUrl: string
+    StartDate: DateTime
+    EndDate: DateTime
+    OrganizationalUnitId: int 
+}
+
+
+
+[<CLIMutable>]
+type NewOpportunity = {
+    OrgUnitId: int
+
+    InitiativeId: int option
+    
+    [<Required; StringLength(50)>]
+    Title: string
+    
+
+    [<Required; StringLength(1024)>]
+    Description: string
+
+    [<Required; StringLength(50)>]
+    EstimatedWorkload: string
+
+
+    [<Required; StringLength(200)>]
+    Outcomes: string
+    
+    StartDate: DateTime
+    
+    EndDate: DateTime
+
+    [<Required; StringLength(50)>]
+    Vacancies: string
+
+    CategoryId: int
+}
+
+[<CLIMutable>]
+type OpenOpportunity = {
+    Id: int
+
+    [<Required; StringLength(50)>]
+    Title: string
+    
+
+    [<Required; StringLength(1024)>]
+    Description: string
+
+    [<Required; StringLength(50)>]
+    EstimatedWorkload: string
+
+
+    [<Required; StringLength(200)>]
+    Outcomes: string
+    
+    StartDate: DateTime
+    
+    EndDate: DateTime
+
+    [<Required; StringLength(50)>]
+    Vacancies: string
+
+    CategoryId: int
+
+    OwnerId: int
+
+    IsApplicationSubmitted: bool option
+}
+
+
+type OpportunityDetail = {
+    Id: int
+
+    OrgUnitId: int
+
+    Initiative: InitiativeSummary option
+    
+    [<Required; StringLength(50)>]
+    Title: string
+    
+
+    [<Required; StringLength(1024)>]
+    Description: string
+
+    [<Required; StringLength(50)>]
+    EstimatedWorkload: string
+
+
+    [<Required; StringLength(200)>]
+    Outcomes: string
+    
+    StartDate: DateTime
+    
+    EndDate: DateTime
+
+    [<Required; StringLength(50)>]
+    Vacancies: string
+
+    CategoryId: int
+
+    UpdatedAt: DateTime
+
+    UpdatedBy: string
+
+    Version: string
+}
 
 [<CLIMutable>]
 type OrganizationalUnit = {
@@ -139,9 +271,9 @@ type OrganizationalUnit = {
 }
  
 [<CLIMutable>]
-type ToggleFollower = {
-    SubjectType: string
-    SubjectId: int
+type RefData = {
+    Categories: Category[]
+    OrgUnits: OrganizationalUnit[]
 }
 
 [<CLIMutable>]
@@ -152,6 +284,12 @@ type SubjectFollower = {
     FollowerId: int
     FollowerName: string
     CreatedAt: DateTime
+}
+
+[<CLIMutable>]
+type ToggleFollower = {
+    SubjectType: string
+    SubjectId: int
 }
 
 
@@ -168,12 +306,6 @@ type UserDetails = {
     HasOpenOpportunities: bool
     CanManageOpportunities: bool
     Following: SubjectFollower[]
-}
-
-[<CLIMutable>]
-type RefData = {
-    Categories: Category[]
-    OrgUnits: OrganizationalUnit[]
 }
 
 [<CLIMutable>]
