@@ -68,7 +68,9 @@ export class MyOpportunityDetail {
     }
 
     activate(params) {
-        this.opportunityId = typeof (params.id) === "number" ? params.id : null;
+        let id = Number.parseInt(params.id, 10);
+
+        this.opportunityId = !isNaN(id) ? id : null;
 
         if (this.opportunityId) {
             return this._dataService.getOpportunity(this.opportunityId)
