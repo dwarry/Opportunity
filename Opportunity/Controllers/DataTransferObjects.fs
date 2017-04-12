@@ -130,20 +130,21 @@ type InitiativeSummary = {
 type MyOpportunity = {
     Id: int
 
-
     [<Required; StringLength(50)>]
     Title: string
-    
 
     [<Required; StringLength(1024)>]
     Description: string
-
 
     StartDate: DateTime
     
     EndDate: DateTime
 
     CategoryId: int
+
+    ApplicationCount: int
+
+    SuccessfulCount: int
 }
 
 

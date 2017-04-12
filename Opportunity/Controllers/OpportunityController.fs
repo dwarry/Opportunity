@@ -19,7 +19,7 @@ open System.Runtime.InteropServices
 type OpportunityController() =
     inherit ApiController()
 
-    [<HttpGet;Route("/opportunities/{id}", Name="GetOpportunity")>]
+    [<HttpGet;Route("opportunities/{id}", Name="GetOpportunity")>]
     member this.GetOpportunity (id: int): IHttpActionResult =
         let result = OpportunityDataAccess.getOpportunity id
         match result with 
@@ -69,6 +69,8 @@ type OpportunityController() =
                                                          StartDate = opp.StartDate
                                                          EndDate = opp.EndDate
                                                          CategoryId = opp.CategoryId
+                                                         ApplicationCount = opp.ApplicationCount
+                                                         SuccessfulCount = opp.SuccessfulCount
                                                         })
         this.Ok (results) :> _
 

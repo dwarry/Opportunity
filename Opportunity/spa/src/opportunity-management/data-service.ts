@@ -8,7 +8,14 @@ import { DataServiceBase } from '../dataService';
 
 import { IIdVersion } from '../models/idVersion';
 
-import { IInitiativeDetail, IInitiativeListItem, INewInitiative } from './models';
+import {
+    IInitiativeDetail,
+    IInitiativeListItem,
+    IMyOpportunity,
+    INewInitiative,
+    INewOpportunity,
+    IOpportunityDetail
+} from './models';
 
 const log = getLogger('OpportunityManagement-DataService')
 
@@ -57,6 +64,30 @@ export class OpportunityManagementDataService extends DataServiceBase {
     deleteInitiative(idVersion: IIdVersion): Promise<boolean> {
         let result = this.delete(`initiatives/${idVersion.id}?version=${idVersion.version}`, null)
             .then<boolean>(response => true);
+
+        return result;
+    }
+
+    getMyOpportunities(pageIndex: number, pageSize: number): Promise<IMyOpportunity[]> {
+        let result = this._httpClient.fetch(`opportunities/my?pageSize=${pageSize}&pageIndex=${pageIndex}`)
+            .then<any>(response => response.json())
+            .then<IMyOpportunity[]>(data => <IMyOpportunity[]>data);
+
+        return result;
+    }
+
+    getOpportunity(id: number): Promise<IOpportunityDetail> {
+        let result = this._httpClient.fetch(`/opportunities/${id}`)
+            .then<any>(response => response.json())
+            .then<IOpportunityDetail>(data => <IOpportunityDetail>data);
+
+        return result;
+    }
+
+    createOpportunity(opp: INewOpportunity): Promise<number> {
+        let result = this.post("opportunities", opp)
+            .then(response => response.json())
+            .then<number>(data => <number>data);
 
         return result;
     }

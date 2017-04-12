@@ -9,8 +9,8 @@ SELECT		opp.[Id],
 			opp.[StartDate], 
 			opp.[EndDate], 
 			opp.[CategoryId], 
-			(SELECT COUNT(*) FROM dbo.[Application] app WHERE app.OpportunityId = opp.Id ) AS ApplicationCount,
-			(SELECT COUNT(*) FROM dbo.[Application] app WHERE app.OpportunityId = opp.Id AND app.IsSuccessful = 1) as SuccessfulCount
+			ISNULL((SELECT COUNT(*) FROM dbo.[Application] app WHERE app.OpportunityId = opp.Id ),0) AS ApplicationCount,
+			ISNULL((SELECT COUNT(*) FROM dbo.[Application] app WHERE app.OpportunityId = opp.Id AND app.IsSuccessful = 1),0) as SuccessfulCount
 FROM		dbo.[opportunity] opp
 INNER JOIN  dbo.[User] usr on opp.[OwnerId] = usr.[Id]
 WHERE		usr.[AccountName] = @accountName

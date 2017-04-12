@@ -25,6 +25,7 @@ export function configure(aurelia: Aurelia) {
   aurelia.use.plugin('aurelia-materialize-bridge', b => b.useAll())
     .plugin('aurelia-validation')
     .globalResources([
+      "./resources/attributes/md-datepicker-label",
       "./resources/elements/date-field",
       "./resources/elements/icons/icon.html",
       "./resources/value-converters/date-formatter"]);

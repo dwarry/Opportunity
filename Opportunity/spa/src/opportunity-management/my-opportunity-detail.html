@@ -1,0 +1,59 @@
+<template>
+    <require from='../resources/attributes/blur-on-enter'></require>
+    <style>
+        [md-datepicker]+i.material-icons.std-icon-fixup {
+            margin-left: -24px;
+            line-height: 1;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+    </style>
+    <div class="container">
+        <h1>${operation} Opportunity</h1>
+        <div class="row">
+            <form action="" class="col s12 m6 offset-m3">
+
+                <md-input blur-on-enter="true" md-label="Title" md-value.bind="opportunity.title & validate:rules">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Description" md-value.bind="opportunity.description & validate:rules" md-text-area="true"
+                    md-char-counter="length: 1024;">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Estimated Work Load" md-value.bind="opportunity.estimatedWorkLoad & validate:rules"
+                    md-char-counter="length: 50;">
+                </md-input>
+
+                <md-input blur-on-enter="true" md-label="Outcomes" md-value.bind="opportunity.outcomes & validate:rules" md-textarea="true"
+                    md-char-counter="length: 200;">
+                </md-input>
+
+
+                <md-input blur-on-enter="true" md-label="Vacancies" md-value.bind="opportunity.vacancies & validate:rules" md-char-counter="length: 50;">
+                </md-input>
+
+                <select md-select="label: Category" value.two-way="opportunity.categoryId">
+                    <option value="" disabled selected>select a Category</option>
+                    <option repeat.for="category of categories" value.bind="category.id">${category.name}</option>
+                </select>
+
+                <div class="row">
+                    <div ref="startDateWrapper" class="col s6">
+                        <input md-datepicker="container:startDateWrapper; value.two-way:opportunity.startDate & validate:rules; parsers.bind:parsers; options.bind:datePickerOptions"
+                            md-datepicker-label="Applications Open From" type="date" class="std-icon-fixup">
+                    </div>
+
+                    <div ref="endDateWrapper" class="col s6">
+                        <input md-datepicker="container.bind: endDateWrapper;options.bind:datePickerOptions;parsers.bind:parsers;value.two-way:opportunity.endDate & validate:rules;"
+                            md-datepicker-label="Until" type="date" />
+                    </div>
+                </div>
+
+                <button md-button md-wave click.delegate="save()">
+                <i class="material-icons">done</i>
+                Save
+            </button>
+            </form>
+        </div>
+    </div>
+</template>

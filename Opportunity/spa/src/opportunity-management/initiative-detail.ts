@@ -3,7 +3,7 @@ import { AppRouter } from 'aurelia-router';
 import { ValidationController, ValidationRules } from 'aurelia-validation';
 import { MaterializeFormValidationRenderer } from 'aurelia-materialize-bridge';
 
-import { } from '../applicationRoutes'
+//import { } from '../applicationRoutes'
 import { OpportunityManagementDataService } from './data-service';
 import { CommonData, IOrgUnit } from '../models/reference-data';
 import { IInitiativeDetail } from './models';
@@ -17,7 +17,7 @@ import * as moment from 'moment';
 @inject(AppRouter, NewInstance.of(ValidationController), OpportunityManagementDataService, CommonData)
 export class InitiativeDetail {
 
-    private static newInitiative: IInitiativeDetail = {
+    private newInitiative: IInitiativeDetail = {
         id: null,
         name: "",
         description: "",
@@ -31,7 +31,7 @@ export class InitiativeDetail {
 
     operation: string = "";
 
-    initiative: IInitiativeDetail = InitiativeDetail.newInitiative;
+    initiative: IInitiativeDetail = this.newInitiative;
 
     parsers = [new DmyParser(), new DmmmmyyyyParser()];
 
@@ -61,7 +61,7 @@ export class InitiativeDetail {
         .ensure('link').displayName('Link').satisfiesRule(RuleNames.IsValidUrl).maxLength(100)
         .ensure('logoUrl').displayName('Logo').satisfiesRule(RuleNames.IsValidUrl).maxLength(80)
         .ensure('startDate').displayName('Start Date').required()
-        .ensure('endDate').displayName('End Date').required().satisfiesRule(RuleNames.IsAfter, "StartDate")
+        .ensure('endDate').displayName('End Date').required().satisfiesRule(RuleNames.IsAfter, "startDate")
         .rules;
 
     activate(params, routeConfig, navigationInstruction) {
@@ -72,7 +72,7 @@ export class InitiativeDetail {
             return this._dataService.getInitiative(id).then(init => this.initiative = init);
         }
         this.operation = "Create";
-        this.initiative = InitiativeDetail.newInitiative;
+        this.initiative = this.newInitiative;
     }
 
     save() {

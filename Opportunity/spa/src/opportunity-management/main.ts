@@ -12,8 +12,8 @@ export class Main {
 
     constructor(router: AppRouter) {
 
-        this.myOpportunitiesLink = '#';
-        this.createOpportunityLink = '#';
+        this.myOpportunitiesLink = router.generate(routeNames.myOpportunities);
+        this.createOpportunityLink = router.generate(routeNames.myOpportunityDetail, { 'id': 'new' });
         this.initiativesLink = router.generate(routeNames.initiativesList);
         this.createInitiativeLink = router.generate(routeNames.initiativeDetail, { 'id': 'new' });
     }

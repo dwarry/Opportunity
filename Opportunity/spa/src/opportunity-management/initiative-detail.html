@@ -10,8 +10,8 @@
     </style>
     <div class="container">
         <h1>${operation} Initiative</h1>
-        <div class="row well">
-            <form action="" class="col s12 m6">
+        <div class="row">
+            <form action="" class="col s12 m6 offset-m3">
                 <md-input blur-on-enter="true" md-label="Name" md-value.bind="initiative.name & validate:rules">
                 </md-input>
 
@@ -33,7 +33,7 @@
 
                     <div ref="endDateWrapper" class="col s6">
                         <input md-datepicker="container.bind: endDateWrapper;options.bind:datePickerOptions;parsers.bind:parsers;value.two-way:endDate & validate:rules;"
-                            type="date" placeholder="End Date" />
+                            type="date" placeholder="End Date" class="std-icon-fixup" />
                     </div>
 
                 </div>
