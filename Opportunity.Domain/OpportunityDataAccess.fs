@@ -51,6 +51,7 @@ let getOpenOpportunities (pageSize:int) (pageIndex: int) (userName:string) (asAt
 
 type private CreateOpportunity = SqlCommandProvider<"CreateOpportunity.sql", "name=Opportunity", AllParametersOptional = true, SingleRow=true, ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
 
+type private TagTableRow = DB.dbo.``User-Defined Table Types``.TagTable
 
 let createOpportunity (ownerName:string)
                       (orgUnitId:int)
@@ -62,22 +63,29 @@ let createOpportunity (ownerName:string)
                       (startDate:DateTime)
                       (endDate:DateTime)
                       (vacancies:string)
-                      (categoryId: int) : int option = 
-    doInTransaction IsolationLevel.ReadCommitted
+                      (categoryId: int) 
+                      (tags: string[]): int option = 
+    doInTransaction IsolationLevel.RepeatableRead
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new CreateOpportunity(conn, transaction = tran)
-                                 (true, cmd.Execute (Some ownerName,
-                                                     Some orgUnitId,
-                                                     initiativeId,
-                                                     Some title,
-                                                     Some description,
-                                                     Some estimatedWorkload,
-                                                     Some outcomes,
-                                                     Some startDate,
-                                                     Some endDate,
-                                                     Some vacancies,
-                                                     None,
-                                                     Some categoryId)))
+                                 let id = cmd.Execute (Some ownerName,
+                                                       Some orgUnitId,
+                                                       initiativeId,
+                                                       Some title,
+                                                       Some description,
+                                                       Some estimatedWorkload,
+                                                       Some outcomes,
+                                                       Some startDate,
+                                                       Some endDate,
+                                                       Some vacancies,
+                                                       None,
+                                                       Some categoryId)
+                                 match id with
+                                 | Some x -> use cmd = new DB.dbo.SetTagsForOpportunity(conn, tran)
+                                             let tagt = Array.map (fun t -> new TagTableRow(Tag=t)) tags
+                                             let retVal = cmd.Execute(x, tagt)
+                                             (true, id)
+                                 | None -> (false, None))
 
 
 
@@ -97,7 +105,7 @@ let setTagsForOpportunity (opportunityId: int) (tags: string[]) =
                                  use cmd = new DB.dbo.SetTagsForOpportunity(conn, tran)
                                  let tagt = Array.map (fun t -> new DB.dbo.``User-Defined Table Types``.TagTable(t)) tags
                                  let retVal = cmd.Execute(opportunityId, tagt)
-                                 if retVal <> 0 then failwithf "[SetTagsForOpportunity] returned %d" retVal
+                                 //if retVal <> 0 then failwithf "[SetTagsForOpportunity] returned %d" retVal
                                  (true, Some 1)) 
     |> ignore
     

@@ -24,8 +24,8 @@
                     md-char-counter="length: 50;">
                 </md-input>
 
-                <md-input blur-on-enter="true" md-label="Outcomes" md-value.bind="opportunity.outcomes & validate:rules" md-textarea="true"
-                    md-char-counter="length: 200;">
+                <md-input blur-on-enter="true" md-label="Outcomes" md-text-area="true" md-value.bind="opportunity.outcomes & validate:rules"
+                    md-textarea="true" md-char-counter="length: 200;">
                 </md-input>
 
 
@@ -46,6 +46,13 @@
                     <div ref="endDateWrapper" class="col s6">
                         <input md-datepicker="container.bind: endDateWrapper;options.bind:datePickerOptions;parsers.bind:parsers;value.two-way:opportunity.endDate & validate:rules;"
                             md-datepicker-label="Until" type="date" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <label>Tags</label>
+                        <div md-chips="data.bind: tags; placeholder:+tag;"></div>
                     </div>
                 </div>
 

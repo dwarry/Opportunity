@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[SetTagsForOpportunity]
+﻿
+CREATE PROCEDURE [dbo].[SetTagsForOpportunity]
 	@opportunityId int,
 	@tags TagTable readonly 
 AS
@@ -16,10 +17,9 @@ AS
 	DELETE FROM OpportunityTag
 	WHERE OpportunityId = @opportunityId;
 
-	SET NOCOUNT ON;
 	INSERT INTO OpportunityTag (OpportunityId, TagId)
 	SELECT @opportunityId as OpportunityId, t.Id as TagId
 	FROM Tag t
 	INNER JOIN @tags newTags on t.Name = newTags.Tag;
 
-RETURN 0
+	RETURN 0;

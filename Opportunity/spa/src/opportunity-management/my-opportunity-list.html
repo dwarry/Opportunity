@@ -8,9 +8,8 @@
     <div class="container">
         <h1>My Opportunities</h1>
 
-        <button md-button="large:true" click.delegate="addOpportunity()">
-            <i class="left material-icons">note_add</i>
-            Create New Opportunity</button>
+        <a md-button="large:true" href.bind="getAddOpportunityLink()">
+            <i class="left material-icons">note_add</i> Create New Opportunity</a>
 
         <ul md-collapsible="accordion: true; popout: true;">
             <li repeat.for="opp of opportunities">

@@ -19,18 +19,9 @@ import * as moment from 'moment';
 export class MyOpportunityDetail {
 
     opportunityId: number | null;
-    opportunity: INewOpportunity | IOpportunityDetail = {
-        orgUnitId: 1,
-        initiativeId: null,
-        title: "",
-        description: "",
-        estimatedWorkload: "",
-        outcomes: "",
-        startDate: moment().startOf("day").toDate(),
-        endDate: moment().add(14, "days").toDate(),
-        vacancies: "",
-        categoryId: 0
-    };
+
+    opportunity: INewOpportunity | IOpportunityDetail = null;
+
     categories: ICategory[];
 
     parsers = [new DmyParser(), new DmmmmyyyyParser()];
@@ -43,7 +34,9 @@ export class MyOpportunityDetail {
         showIcon: false
     };
 
-    private _rules = ValidationRules
+    tags: { tag: string }[];
+
+    rules = ValidationRules
         .ensure('title').displayName("Title").required().maxLength(50).minLength(5)
         .ensure('description').displayName("Description").required().maxLength(1024)
         .ensure('estimatedWorkLoad').displayName("Estimated Work Load").required().maxLength(50)
@@ -76,6 +69,7 @@ export class MyOpportunityDetail {
             return this._dataService.getOpportunity(this.opportunityId)
                 .then(opp => {
                     this.opportunity = opp;
+                    this.tags = opp.tags.map(x => { return { 'tag': x }; });
                 });
         }
         else {
@@ -89,12 +83,16 @@ export class MyOpportunityDetail {
                 startDate: moment().startOf("day").toDate(),
                 endDate: moment().add(14, "days").toDate(),
                 vacancies: "",
-                categoryId: 0
+                categoryId: 0,
+                tags: []
             };
+            this.tags = [];
         }
     }
 
     save() {
+        debugger;
+        this.opportunity.tags = this.tags.map(x => x.tag);
         this._dataService.createOpportunity(<INewOpportunity>this.opportunity);
     }
 

@@ -28,6 +28,10 @@ export class MyOpportunityList {
         return category ? category.icon : "";
     }
 
+    getAddOpportunityLink() {
+        return this._router.generate(routeNames.myOpportunityDetail, { id: 'new' });
+    }
+
     getDetailsLink(opportunityId: number) {
         return this._router.generate(routeNames.myOpportunityDetail, { id: opportunityId });
     }

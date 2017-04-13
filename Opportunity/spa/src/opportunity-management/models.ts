@@ -44,6 +44,7 @@ export interface IMyOpportunity {
     startDate: Date;
     endDate: Date;
     categoryId: number;
+    tags: string[];
     applicationCount: number;
     successfulCount: number;
 }
@@ -60,6 +61,7 @@ export interface IOpportunityDetail {
     endDate: Date;
     vacancies: string;
     categoryId: number;
+    tags: string[];
     updatedAt: Date;
     updatedBy: string;
     version: string;
@@ -77,6 +79,7 @@ export interface INewOpportunity {
     endDate: Date;
     vacancies: string;
     categoryId: number;
+    tags: string[];
 }
 
 export interface IOpenOpportunity {
@@ -90,5 +93,6 @@ export interface IOpenOpportunity {
     vacancies: string;
     categoryId: number;
     ownerId: number;
+    tags: string[];
     isApplicationSubmitted: boolean
 }

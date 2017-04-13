@@ -129,10 +129,9 @@ type OpportunityController() =
                                                                  opportunity.EndDate
                                                                  opportunity.Vacancies
                                                                  opportunity.CategoryId
-
+                                                                 opportunity.Tags
             match result with
-            | Some id -> OpportunityDataAccess.setTagsForOpportunity id opportunity.Tags
-                         this.CreatedAtRoute("GetOpportunity", {id = id}, "") :> _
+            | Some id -> this.CreatedAtRoute("GetOpportunity", {id = id}, "") :> _
             | None -> this.InternalServerError() :> _
         else
             this.BadRequest(this.ModelState) :> _
