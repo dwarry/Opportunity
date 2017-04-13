@@ -78,3 +78,26 @@ let createOpportunity (ownerName:string)
                                                      Some vacancies,
                                                      None,
                                                      Some categoryId)))
+
+
+
+type private GetTagsForOpportunity = SqlCommandProvider<"GetTagsForOpportunity.sql", "name=Opportunity", ConfigFile="DesignTime.config", ResolutionFolder=sqlFolder >
+
+
+let getTagsForOpportunity (opportunityId: int): string[] option = 
+    doInTransaction IsolationLevel.ReadCommitted
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new GetTagsForOpportunity(conn, transaction = tran)
+                                 (true, cmd.Execute (opportunityId) |> Seq.toArray |> Some ) )
+
+
+let setTagsForOpportunity (opportunityId: int) (tags: string[]) = 
+    doInTransaction IsolationLevel.RepeatableRead
+                    (fun tran -> let conn = tran.Connection
+                                 use cmd = new DB.dbo.SetTagsForOpportunity(conn, tran)
+                                 let tagt = Array.map (fun t -> new DB.dbo.``User-Defined Table Types``.TagTable(t)) tags
+                                 let retVal = cmd.Execute(opportunityId, tagt)
+                                 if retVal <> 0 then failwithf "[SetTagsForOpportunity] returned %d" retVal
+                                 (true, Some 1)) 
+    |> ignore
+    

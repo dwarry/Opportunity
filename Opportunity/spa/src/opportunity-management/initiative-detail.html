@@ -27,15 +27,13 @@
                 <div class="row">
                     <div ref="startDateWrapper" class="col s6">
                         <input md-datepicker="container:startDateWrapper; value.two-way:startDate & validate:rules; parsers.bind:parsers; options.bind:datePickerOptions"
-                            type="date" placeholder="Start Date" class="std-icon-fixup">
+                            type="date" md-datepicker-label="Runs from" class="std-icon-fixup">
                     </div>
-
 
                     <div ref="endDateWrapper" class="col s6">
                         <input md-datepicker="container.bind: endDateWrapper;options.bind:datePickerOptions;parsers.bind:parsers;value.two-way:endDate & validate:rules;"
-                            type="date" placeholder="End Date" class="std-icon-fixup" />
+                            type="date" md-datepicker-label="Until" class="std-icon-fixup" />
                     </div>
-
                 </div>
                 <button md-button click.delegate="save()">Save</button>
             </form>

@@ -6,6 +6,7 @@ open System.Net.Http
 open System.Web.Http
 open System.Web.Http.Cors
 
+open Opportunity
 open Opportunity.Domain
 open Opportunity.DataTransferObjects
 open Opportunity.Filters
@@ -23,7 +24,9 @@ type OpportunityController() =
     member this.GetOpportunity (id: int): IHttpActionResult =
         let result = OpportunityDataAccess.getOpportunity id
         match result with 
-        | Some opp ->  let init = match opp.InitiativeId with
+        | Some opp ->  let tags = OpportunityDataAccess.getTagsForOpportunity id
+                                  |> OptionHelpers.defaultIfNone Array.empty<string>
+                       let init = match opp.InitiativeId with
                                   | Some x -> Some { InitiativeSummary.Id = x
                                                      Name =  opp.InitiativeName
                                                      Link =  opp.InitiativeLink
@@ -42,6 +45,7 @@ type OpportunityController() =
                                   EndDate = opp.EndDate
                                   Vacancies = opp.Vacancies
                                   CategoryId = opp.CategoryId
+                                  Tags = tags
                                   UpdatedAt = opp.UpdatedAt
                                   UpdatedBy = opp.UpdatedBy
                                   Version = System.Convert.ToBase64String(opp.Version)
@@ -63,7 +67,9 @@ type OpportunityController() =
         let results = 
             match opportunities with
             | None -> Array.empty<MyOpportunity>
-            | Some arr -> arr |> Array.map (fun opp -> { MyOpportunity.Id = opp.Id
+            | Some arr -> arr |> Array.map (fun opp -> let tags = OpportunityDataAccess.getTagsForOpportunity opp.Id
+                                                                  |> OptionHelpers.defaultIfNone Array.empty<string>
+                                                       { MyOpportunity.Id = opp.Id
                                                          Title = opp.Title
                                                          Description = opp.Description
                                                          StartDate = opp.StartDate
@@ -71,6 +77,7 @@ type OpportunityController() =
                                                          CategoryId = opp.CategoryId
                                                          ApplicationCount = opp.ApplicationCount
                                                          SuccessfulCount = opp.SuccessfulCount
+                                                         Tags = tags
                                                         })
         this.Ok (results) :> _
 
@@ -89,7 +96,9 @@ type OpportunityController() =
         let results = 
             match opportunities with
             | None -> Array.empty<OpenOpportunity> 
-            | Some arr -> arr |> Array.map (fun opp -> { OpenOpportunity.Id = opp.Id
+            | Some arr -> arr |> Array.map (fun opp -> let tags = OpportunityDataAccess.getTagsForOpportunity opp.Id
+                                                                  |> OptionHelpers.defaultIfNone Array.empty<string>
+                                                       { OpenOpportunity.Id = opp.Id
                                                          Title = opp.Title
                                                          Description = opp.Description
                                                          EstimatedWorkload = opp.EstimatedWorkload
@@ -99,6 +108,7 @@ type OpportunityController() =
                                                          Vacancies = opp.Vacancies
                                                          CategoryId = opp.CategoryId
                                                          OwnerId = opp.OwnerId
+                                                         Tags = tags
                                                          IsApplicationSubmitted = opp.IsSubmitted
                                                        })
 
@@ -121,7 +131,8 @@ type OpportunityController() =
                                                                  opportunity.CategoryId
 
             match result with
-            | Some id -> this.CreatedAtRoute("GetOpportunity", {id = id}, "") :> _
+            | Some id -> OpportunityDataAccess.setTagsForOpportunity id opportunity.Tags
+                         this.CreatedAtRoute("GetOpportunity", {id = id}, "") :> _
             | None -> this.InternalServerError() :> _
         else
             this.BadRequest(this.ModelState) :> _

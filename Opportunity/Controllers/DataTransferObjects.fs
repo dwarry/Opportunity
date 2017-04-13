@@ -145,6 +145,8 @@ type MyOpportunity = {
     ApplicationCount: int
 
     SuccessfulCount: int
+
+    Tags: string[]
 }
 
 
@@ -157,7 +159,7 @@ type NewInitiative = {
     LogoUrl: string
     StartDate: DateTime
     EndDate: DateTime
-    OrganizationalUnitId: int 
+    OrganizationalUnitId: int
 }
 
 
@@ -190,6 +192,8 @@ type NewOpportunity = {
     Vacancies: string
 
     CategoryId: int
+
+    Tags: string[]
 }
 
 [<CLIMutable>]
@@ -220,6 +224,8 @@ type OpenOpportunity = {
     CategoryId: int
 
     OwnerId: int
+
+    Tags: string[]
 
     IsApplicationSubmitted: bool option
 }
@@ -254,6 +260,8 @@ type OpportunityDetail = {
     Vacancies: string
 
     CategoryId: int
+
+    Tags: string[]
 
     UpdatedAt: DateTime
 

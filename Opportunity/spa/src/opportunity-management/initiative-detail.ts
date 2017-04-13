@@ -38,9 +38,9 @@ export class InitiativeDetail {
     datePickerOptions = {
         closeOnSelect: true,
         closeOnClear: true,
-        selectYears: 50,
-        editable: true,
-        showIcon: true
+        selectYears: 2,
+        editable: false,
+        showIcon: false
     };
 
 
