@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Opportunity", "Opportunity\Opportunity.fsproj", "{8636FE5D-6F56-4533-B011-C76D1DC76560}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Opportunity.Db", "Opportunity.Db\Opportunity.Db.sqlproj", "{2BC4573F-97F9-4FF8-8F28-7EC5928516EF}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Opportunity.Domain", "Opportunity.Domain\Opportunity.Domain.fsproj", "{966480C5-1D39-480C-8755-D06359434971}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D65808A-C30D-41A9-B608-B5D91D38FB3E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
