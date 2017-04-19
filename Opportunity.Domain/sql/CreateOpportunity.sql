@@ -1,5 +1,11 @@
-﻿DECLARE @ownerId INT = 2
-DECLARE @userId INT = @ownerId
+﻿--DECLARE @ownerName NVARCHAR(32) = 'SILICON\davew'
+declare @userId INT;
+declare @userName NVARCHAR(32) = @ownerName;
+
+SELECT @userId = Id
+FROM   dbo.[User]
+WHERE  [AccountName] = @userName;
+
 INSERT INTO opportunity 
 (
     OwnerId, 
@@ -33,5 +39,5 @@ VALUES
     @furtherDetailsUrl,
     @categoryId,
     SYSDATETIME(),
-    @userId
+    @userName
 )

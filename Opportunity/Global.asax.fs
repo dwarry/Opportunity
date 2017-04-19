@@ -41,6 +41,7 @@ type Global() =
 
     static member RegisterWebApi(config: HttpConfiguration) =
         // Configure routing
+        config.EnableCors();
         config.MapHttpAttributeRoutes()
         config.Routes.MapHttpRoute(
             "DefaultApi", // Route name

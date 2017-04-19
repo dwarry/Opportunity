@@ -1,0 +1,35 @@
+<template>
+    <style>
+        .collapsible-header i {
+            padding-left: 0.5rem;
+            padding-top: -0.25rem;
+        }
+    </style>
+    <div class="container">
+        <h1>My Opportunities</h1>
+
+        <a md-button="large:true" href.bind="getAddOpportunityLink()">
+            <i class="left material-icons">note_add</i> Create New Opportunity</a>
+
+        <ul md-collapsible="accordion: true; popout: true;">
+            <li repeat.for="opp of opportunities">
+                <div class="collapsible-header">
+                    ${opp.title}
+                </div>
+                <div class="collapsible-body">
+                    <div class="right">
+                        <a md-button="floating:true;" md-wave md-tooltip="position:bottom;text:Edit" href.bind="getDetailsLink(opp.id)">
+                            <i class="center material-icons">mode_edit</i>
+                        </a>
+                        <a href.bind="generateApplicationsLink(opp.id)" md-button="floating:true;" md-wave md-tooltip="position:bottom;text:View Applications">
+                            <i class="center material-icons">description</i>
+                        </a>
+                    </div>
+                    <blockquote>${opp.description}</blockquote>
+                    Applications open from ${opp.startDate|dateFormatter} to ${opp.endDate|dateFormatter}<br> Successful
+                    Applications: ${opp.successfulCount} of ${opp.applicationCount}
+                </div>
+            </li>
+        </ul>
+    </div>
+</template>

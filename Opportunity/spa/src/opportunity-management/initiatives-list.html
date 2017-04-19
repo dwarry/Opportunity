@@ -1,0 +1,32 @@
+<template>
+
+    <div class="container">
+        <h1>Initiatives</h1>
+        <div>
+            <a md-button="large: true;" click.delegate="createInitiative()"><i class="left material-icons">library_add</i> Add New Initiative</a>
+        </div>
+
+        <div>
+            <ul md-collapsible="accordion:true;popout:true;">
+                <li repeat.for="initiative of initiatives">
+                    <div class="collapsible-header">${initiative.name}</div>
+                    <div class="collapsible-body">
+                        <a md-button class="right" click.delegate="editInitiative(initiative.id)" md-tooltip="position:bottom;text:Edit">
+                            <i class="material-icons">mode_edit</i>
+                        </a>
+                        ${initiative.startDate|dateFormatter} - ${initiative.endDate|dateFormatter}
+                        <span if.bind="initiative.orgUnitId">
+                        ${getOrgUnitName(initiative.orgUnitId)}
+                        </span><br>
+                        <i if.bind="initiative.description">${initiative.description}</i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="s12" if.bind="pageCount > 1">
+            <md-pagination md-pages.bind="pageCount" md-active-page.bind="pageIndex" md-on-page-changed.delegate="onPageChanged($event)"></md-pagination>
+        </div>
+    </div>
+
+</template>

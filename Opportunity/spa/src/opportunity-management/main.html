@@ -1,28 +1,29 @@
 <template>
-    <require from="../resources/elements/menu-card"></require>
-    <h1>Manage Opportunities</h1>
+    <require from="../resources/elements/menu-card.html"></require>
     <div class="container">
         <div class="row">
-            <div class="s12">
-                Blah blah blah. Manage Initiatives and Opportunities here.
+            <h1>Manage Opportunities</h1>
+            <div class="s12 flow-text">
+                Manage Initiatives and Opportunities here. Initiatives are wider programmes that an opportunity <i>may</i>                be a part of; they may be for a specific business area, or across the entire organisation. Users will be
+                able to follow specific initiatives to be notified when there are new Opportunities associated with them.
             </div>
         </div>
         <div class="row">
-            <div class="m3">
-                <menu-card title="My Opportunities" icon="signpost" description="View and manage the Opportunities I have created." link="#/opportunities">
+            <div class="col s12 m3">
+                <menu-card title="My Opportunities" icon="signpost" description="View and manage the Opportunities I have created." link="${myOpportunitiesLink}">
                 </menu-card>
             </div>
-            <div class="m3">
-                <menu-card title="Create Opportunity" icon="createOpportunity" description="Create a new Opportunity" link="#/opportunities/new">
+            <div class="col s12 m3">
+                <menu-card title="Create Opportunity" icon="createOpportunity" description="Create a new Opportunity" link="${createOpportunityLink}">
                 </menu-card>
             </div>
-            <div class="m3">
-                <menu-card title="Initiatives" icon="initatives" description="Manage the initiatives that are available" link="#/initiatives">
+            <div class="col s12 m3">
+                <menu-card title="Initiatives" icon="initiatives" description="Manage the initiatives that are available" link="${initiativesLink}">
                 </menu-card>
             </div>
 
-            <div class="m3">
-                <menu-card title="Add Initiative" icon="initatives" description="Manage the initiatives that are available" link="#/initiatives/new">
+            <div class="col s12 m3">
+                <menu-card title="Add Initiative" icon="initiatives" description="Manage the initiatives that are available" link="${createInitiativeLink}">
                 </menu-card>
             </div>
         </div>

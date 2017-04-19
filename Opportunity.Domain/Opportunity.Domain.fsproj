@@ -54,6 +54,7 @@
     <Compile Include="DataAccess.fs" />
     <Compile Include="UserDataAccess.fs" />
     <Compile Include="InitiativeDataAccess.fs" />
+    <Compile Include="OpportunityDataAccess.fs" />
     <Content Include="packages.config" />
     <Content Include="DesignTime.config" />
     <None Include="SQL\GetActiveInitiatives.sql" />
@@ -67,6 +68,12 @@
     <None Include="SQL\CreateOpportunity.sql" />
     <None Include="SQL\InsertUser.sql" />
     <None Include="SQL\DeleteInitiative.sql" />
+    <None Include="SQL\GetInitiativeCount.sql" />
+    <None Include="SQL\GetInitiativeIdByName.sql" />
+    <None Include="SQL\GetMyOpportunities.sql" />
+    <None Include="SQL\GetOpenOpportunities.sql" />
+    <None Include="SQL\GetOpportunity.sql" />
+    <None Include="SQL\GetTagsForOpportunity.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data.SqlClient">

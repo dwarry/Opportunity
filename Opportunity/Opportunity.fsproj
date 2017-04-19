@@ -109,18 +109,23 @@
   </ProjectExtensions>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="OptionHelpers.fs" />
+    <Compile Include="Filters\DefaultParameterValueFixupFilter.fs" />
     <Compile Include="Controllers\DataTransferObjects.fs" />
+    <Compile Include="Controllers\Validation.fs" />
     <Compile Include="Controllers\ReferenceData.fs" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\ValuesController.fs" />
     <Compile Include="Controllers\UserController.fs" />
     <Compile Include="Controllers\InitiativeController.fs" />
+    <Compile Include="Controllers\OpportunityController.fs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Compile Include="CorsPreflightOptionModule.fs" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
     <Compile Include="OptionConverter.fs" />
@@ -133,6 +138,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\MaterialIcons-Regular.ttf" />
+    <Content Include="fonts\MaterialIcons-Regular.woff2" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\npm.js" />
@@ -190,6 +197,10 @@
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices.dll" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData.dll" />
     <Reference Include="System.Web.Entity.dll" />
     <Reference Include="System.Web.Extensions" />
@@ -199,6 +210,10 @@
     </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost">

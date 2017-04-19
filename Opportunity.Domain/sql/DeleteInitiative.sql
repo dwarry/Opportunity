@@ -9,7 +9,7 @@ WHERE InitiativeId = @id;
 IF @opportunityId IS NULL
 	DELETE FROM Initiative
 	OUTPUT DELETED.Id
-	WHERE Id = @id;
+	WHERE Id = @id and Version = @version;
 ELSE
 	SELECT NULL;
 

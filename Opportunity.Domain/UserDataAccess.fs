@@ -38,9 +38,7 @@ let createUser (accountName: string)
                     (fun tran -> let conn = tran.Connection
                                  use cmd = new InsertUser(conn, transaction = tran)
                                  let newId = cmd.Execute(accountName, firstName, familyName, emailAddress, profileUrl, imageUrl, DateTime.Now, updatedBy)
-                                 match newId with
-                                 | Some id -> (true, newId)
-                                 | _       -> (false, None))
+                                 (Option.isSome newId, newId))
 
     
 let rec getUser (accountName: string) = 
