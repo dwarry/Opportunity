@@ -1,4 +1,6 @@
 export default {
   debug: true,
-  testing: false
+  testing: false,
+  apiBase: "http://localhost:48213/api/",
+  credentials: "include"
 };

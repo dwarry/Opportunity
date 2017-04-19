@@ -9,11 +9,17 @@
         }
     </style>
     <div class="container">
-        <h1>${operation} Opportunity</h1>
+        <h1 class="center-align">${operation} Opportunity</h1>
         <div class="row">
-            <form action="" class="col s12 m6 offset-m3">
+            <div class="col m3 push-m9 hide-on-small-only">
 
-                <md-input blur-on-enter="true" md-label="Title" md-value.bind="opportunity.title & validate:rules">
+                <button md-button md-wave click.delegate="save()">
+                <i class="material-icons">done</i>
+                Save
+            </button>
+            </div>
+            <form action="" class="col s12 m6 ">
+                <md-input blur-on-enter="true" md-char-counter="length:80;" md-label="Title" md-value.bind="opportunity.title & validate:rules">
                 </md-input>
 
                 <md-input blur-on-enter="true" md-label="Description" md-value.bind="opportunity.description & validate:rules" md-text-area="true"
@@ -21,13 +27,12 @@
                 </md-input>
 
                 <md-input blur-on-enter="true" md-label="Estimated Work Load" md-value.bind="opportunity.estimatedWorkload & validate:rules"
-                    md-char-counter="length: 50;">
+                    md-char-counter="length:50;">
                 </md-input>
 
                 <md-input blur-on-enter="true" md-label="Outcomes" md-text-area="true" md-value.bind="opportunity.outcomes & validate:rules"
                     md-textarea="true" md-char-counter="length: 200;">
                 </md-input>
-
 
                 <md-input blur-on-enter="true" md-label="Vacancies" md-value.bind="opportunity.vacancies & validate:rules" md-char-counter="length: 50;">
                 </md-input>
@@ -55,11 +60,13 @@
                         <div md-chips="data.bind: tags; placeholder:+tag;"></div>
                     </div>
                 </div>
+                <div class="hide-on-med-and-up">
 
-                <button md-button md-wave click.delegate="save()">
+                    <button md-button md-wave click.delegate="save()">
                 <i class="material-icons">done</i>
                 Save
             </button>
+                </div>
             </form>
         </div>
     </div>

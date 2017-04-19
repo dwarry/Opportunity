@@ -7,10 +7,13 @@
         </div>
 
         <div>
-            <ul md-collapsible>
+            <ul md-collapsible="accordion:true;popout:true;">
                 <li repeat.for="initiative of initiatives">
                     <div class="collapsible-header">${initiative.name}</div>
                     <div class="collapsible-body">
+                        <a md-button class="right" click.delegate="editInitiative(initiative.id)" md-tooltip="position:bottom;text:Edit">
+                            <i class="material-icons">mode_edit</i>
+                        </a>
                         ${initiative.startDate|dateFormatter} - ${initiative.endDate|dateFormatter}
                         <span if.bind="initiative.orgUnitId">
                         ${getOrgUnitName(initiative.orgUnitId)}

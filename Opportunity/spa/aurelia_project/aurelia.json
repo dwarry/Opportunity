@@ -93,6 +93,7 @@
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "jquery",
           "aurelia-binding",
           "aurelia-bootstrapper",
           "aurelia-dependency-injection",
@@ -131,7 +132,6 @@
             "main": "aurelia-testing",
             "env": "dev"
           },
-          "jquery",
           "whatwg-fetch",
           {
             "name": "aurelia-fetch-client",

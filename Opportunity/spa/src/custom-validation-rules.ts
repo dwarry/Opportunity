@@ -10,8 +10,7 @@ class UrlTester {
     testUrlExists(url: string, allowUnauthorised: boolean): boolean | Promise<boolean> {
         if (url === null || url === undefined) { return true; }
         return this._httpClient.fetch(url)
-            .then<boolean>(response => (response.status == 200 || (response.status == 401 && allowUnauthorised)),
-            reason => false);
+            .then<boolean>(response => (response.status == 200 || (response.status == 401 && allowUnauthorised)));
     }
 }
 

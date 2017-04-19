@@ -14,19 +14,17 @@
         <ul md-collapsible="accordion: true; popout: true;">
             <li repeat.for="opp of opportunities">
                 <div class="collapsible-header">
-                    <div class="valign">${opp.title}
-
-                        <div class="right">
-                            <a md-button="floating:true;" md-wave md-tooltip="position:bottom;text:Edit" href.bind="getDetailsLink(opp.id)">
-                                <i class="center material-icons">mode_edit</i>
-                            </a>
-                            <a href.bind="generateApplicationsLink(opp.id)" md-button="floating:true;" md-wave md-tooltip="position:bottom;text:View Applications">
-                                <i class="center material-icons">description</i>
-                            </a>
-                        </div>
-                    </div>
+                    ${opp.title}
                 </div>
                 <div class="collapsible-body">
+                    <div class="right">
+                        <a md-button="floating:true;" md-wave md-tooltip="position:bottom;text:Edit" href.bind="getDetailsLink(opp.id)">
+                            <i class="center material-icons">mode_edit</i>
+                        </a>
+                        <a href.bind="generateApplicationsLink(opp.id)" md-button="floating:true;" md-wave md-tooltip="position:bottom;text:View Applications">
+                            <i class="center material-icons">description</i>
+                        </a>
+                    </div>
                     <blockquote>${opp.description}</blockquote>
                     Applications open from ${opp.startDate|dateFormatter} to ${opp.endDate|dateFormatter}<br> Successful
                     Applications: ${opp.successfulCount} of ${opp.applicationCount}

@@ -1,7 +1,7 @@
 import { Aurelia } from 'aurelia-framework';
 import environment from './environment';
 import { addCustomValidationRules } from './custom-validation-rules';
-
+import 'jquery';
 
 //Configure Bluebird Promises.
 (<any>Promise).config({
